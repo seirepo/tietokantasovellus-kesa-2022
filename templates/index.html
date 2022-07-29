@@ -1,0 +1,22 @@
+<h1>WORDSLET</h1>
+Käyttäjien määrä: {{ count }}
+<ul>
+{% for user in users %}
+<li>{{ user.username }}</li>
+{% endfor %}
+</ul>
+
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Logout</a>
+{% else %}
+<a href="/login">Login</a>
+<a href="/register">Sign up</a>
+{% endif %}
+
+<form action="/result" method="GET">
+    Hakusana: <input type="text" name="query">
+    <br>
+    <input type="submit" value="Search">
+</form>
+    
