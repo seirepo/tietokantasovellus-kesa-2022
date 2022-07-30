@@ -1,4 +1,6 @@
-<h1>WORDSLET</h1>
+{% extends "layout.html" %}
+{% block title %}Main{% endblock %}
+{% block content %}
 Käyttäjien määrä: {{ count }}
 <ul>
 {% for user in users %}
@@ -10,17 +12,9 @@ Käyttäjien määrä: {{ count }}
 {% endfor %}
 </ul>
 
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Logout</a>
-{% else %}
-<a href="/login">Login</a>
-<a href="/register">Sign up</a>
-{% endif %}
-
 <form action="/result" method="GET">
     Hakusana: <input type="text" name="query">
     <br>
     <input type="submit" value="Search">
 </form>
-    
+{% endblock %}

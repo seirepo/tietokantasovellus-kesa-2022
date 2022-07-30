@@ -1,7 +1,13 @@
 <!doctype html>
 <title>Wordslet - {% block title %}{% endblock %}</title>
-<a href="/"><h1>Wordslet</h1>></a>
-<a href="/login">Kirjautuminen</a>
+<a href="/"><h1>Wordslet</h1></a>
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Logout</a>
+{% else %}
+<a href="/login">Login</a>
+<a href="/register">Sign up</a>
+{% endif %}
 <hr>
 {% block content %}{% endblock %}
 <hr>
