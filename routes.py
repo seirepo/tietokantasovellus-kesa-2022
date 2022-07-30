@@ -54,10 +54,7 @@ def register():
             print("####length of password must be at least 5")
             return redirect("/register")
 
-        sql = "SELECT id, password FROM users WHERE username=:username"
-        result = db.session.execute(sql, {"username":username})
-        user = result.fetchone()
-        if user:
+        if users.user_exists(username):
             print("####username already taken")
             return redirect("/register")
         else:
@@ -65,14 +62,11 @@ def register():
                 print("####passwords don't match")
                 return redirect("/register")
 
-        hash_value = generate_password_hash(password1)
-
-        sql = """INSERT INTO users (username, password, role)
-                 VALUES (:username, :password, :role)"""
-        print("####uusi käyttäjä ", username, " lisätty roolilla", role)
-        db.session.execute(sql, {"username":username, "password":hash_value, "role":role})
-        db.session.commit()
-        return redirect("/")
+        if users.register(username, password1, role):
+            print("####welcome", username, "!")
+            return redirect("/")
+        else:
+            print("####something went wrong :-(")
     
 @app.route("/logout")
 def logout():
