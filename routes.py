@@ -6,7 +6,7 @@ import users
 
 @app.route("/")
 def index():
-    result = db.session.execute("SELECT username FROM users")
+    result = db.session.execute("SELECT username, role FROM users")
     users = result.fetchall()
     return render_template("index.html", count=len(users), users=users)
 
@@ -43,6 +43,9 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
 
+        #TODO: validate role
+        role = request.form["role"]
+
         #TODO: check the length of both
         if len(username) < 3 or len(password1) < 5:
             print("####length of username must be at least 3 and password 5")
@@ -64,9 +67,10 @@ def register():
 
         hash_value = generate_password_hash(password1)
 
-        sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
-        print("####uusi käyttäjä ", username, " lisätty")
-        db.session.execute(sql, {"username":username, "password":hash_value})
+        sql = """INSERT INTO users (username, password, role)
+                 VALUES (:username, :password, :role)"""
+        print("####uusi käyttäjä ", username, " lisätty roolilla", role)
+        db.session.execute(sql, {"username":username, "password":hash_value, "role":role})
         db.session.commit()
         return redirect("/")
     
