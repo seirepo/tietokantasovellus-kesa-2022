@@ -46,21 +46,21 @@ def register():
         #TODO: validate role
         role = request.form["role"]
 
-        #TODO: check the length of both
-        if len(username) < 3 or len(password1) < 5:
-            print("####length of username must be at least 3 and password 5")
+        if len(username) < 3 or len(username) > 20:
+            print("####length of username must be between 3 and 20")
             return redirect("/register")
 
-        #TODO: check that username is not taken
+        if len(password1) < 5:
+            print("####length of password must be at least 5")
+            return redirect("/register")
+
         sql = "SELECT id, password FROM users WHERE username=:username"
         result = db.session.execute(sql, {"username":username})
         user = result.fetchone()
-
         if user:
             print("####username already taken")
             return redirect("/register")
         else:
-            #TODO: check that passwords match
             if password1 != password2:
                 print("####passwords don't match")
                 return redirect("/register")
