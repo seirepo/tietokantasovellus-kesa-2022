@@ -18,21 +18,12 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        sql = "SELECT id, password FROM users WHERE username=:username"
-        result = db.session.execute(sql, {"username":username})
-        user = result.fetchone()
-
-        if not user:
-            print("####invalid username")
-            return redirect("/login")
+        if users.login(username, password):
+            print("####welcome", username)
+            return redirect("/")
         else:
-            hash_value = user.password
-            if check_password_hash(hash_value, password):
-                session["username"] = username
-                return redirect("/")
-            else:
-                print("####invalid password")
-                return redirect("/login")
+            print("####invalid username or password")
+            return redirect("/login")
                 
 @app.route("/register", methods=["GET", "POST"])
 def register():
