@@ -2,7 +2,7 @@
 <title>Wordslet - {% block title %}{% endblock %}</title>
 <a href="/"><h1>Wordslet</h1></a>
 {% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<p>You are signed in as {{ session.username }}</p>
 <a href="/logout">Logout</a>
 {% else %}
 <a href="/login">Login</a>

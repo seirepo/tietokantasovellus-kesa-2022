@@ -1,3 +1,7 @@
+{% extends "layout_bare.html" %}
+{% block title %}Register{% endblock %}
+{% block header %}Register{% endblock %}
+{% block content %}
 <form action="/register" method="POST">
     <p>Username:
     <input type="text" name="username"></p>
@@ -11,3 +15,4 @@
     <input type="submit" value="Sign up">
 </form>
 <a href="/">Cancel</a>
+{% endblock %}
