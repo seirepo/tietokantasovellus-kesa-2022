@@ -1,4 +1,5 @@
 import os
+import secrets
 
 from flask import session
 from db import db
@@ -14,6 +15,7 @@ def login(username, password):
         hash_value = user.password
         if check_password_hash(hash_value, password):
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return True
         else:
             return False
@@ -33,4 +35,4 @@ def register(username, password, role):
         db.session.commit()
     except:
         return False;
-    return True
+    return login(username, password)
