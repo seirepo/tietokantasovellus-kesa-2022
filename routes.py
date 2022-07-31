@@ -84,7 +84,7 @@ def show_user(id):
     return render_template("user.html", count=len(sets), username=username, sets=sets, creator=id)
 
 @app.route("/add-new-set")
-def create():
+def add_new_set():
     if session.get("username"):
         #TODO: actual implementation
         return render_template("add-new-set.html")
