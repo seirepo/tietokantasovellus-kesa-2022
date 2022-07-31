@@ -96,3 +96,8 @@ def add_new_set():
 def play(id):
     #TODO: actual implementation
     return render_template("play.html")
+
+@app.route("/edit-set/<int:id>")
+def edit_set(id):
+    #TODO: actual implementation
+    return render_template("edit-set.html")
