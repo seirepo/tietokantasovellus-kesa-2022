@@ -49,3 +49,9 @@ def get_username(id):
     result = db.session.execute(sql, {"id":id})
     user = result.fetchone()
     return user.username
+
+def current_user():
+    return session.get("username", 0)
+
+def current_user_id():
+    return session.get("user_id", 0)
