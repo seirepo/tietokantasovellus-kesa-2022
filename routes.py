@@ -83,10 +83,11 @@ def show_user(id):
     sets = result.fetchall()
     return render_template("user.html", count=len(sets), username=username, sets=sets, creator=id)
 
-@app.route("/create")
+@app.route("/add-new-set")
 def create():
     if session.get("username"):
-        return render_template("create.html")
+        #TODO: actual implementation
+        return render_template("add-new-set.html")
     else:
         #TODO: add an error message "log in to create a new set" or sth
         return redirect("/login")
