@@ -3,6 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app import app
 from db import db
 import users
+import sets
 
 @app.route("/")
 def index():
@@ -87,17 +88,40 @@ def show_user(id):
 @app.route("/add-new-set", methods=["GET", "POST"])
 def add_new_set():
     if request.method == "GET":
-        if session.get("username"):
+        if users.current_user():
             #TODO: actual implementation
             return render_template("add-new-set.html")
         else:
             #TODO: add an error message "log in to create a new set" or sth
             return redirect("/login")
     if request.method == "POST":
-        flash("New set added")
         #TODO: users.check_csrf()
+        name = request.form["name"]
+        if len(name) < 1 or len(name) > 20:
+            flash("Name length must be between 1-20")
+
+        description = request.form["description"]
+        if len(description) > 100:
+            flash("Description too long: " + len(description) + "> 100")
+
+        words = request.form["words"]
+        if len(words) > 1000:
+            flash("Word list too long: " + len(words) + " > 1000")
+
+        term = request.form["term"]
+        if len(term) > 20:
+            flash("Term too long: " + len(term) + " > 20")
+
+        definition = request.form["definition"]
+        if len(definition) > 20:
+            flash("Definition too long: " + len(term) + " > 20")
+
+        #TODO: validate private
+        private = request.form["private"]
+
         #TODO: handle request form parameters
-        #TODO: check params
+        sets.add_new_set(name, description, words, term, definition, private, users.current_user_id())
+
         #TODO: return to user's page
         return redirect("/")
 
