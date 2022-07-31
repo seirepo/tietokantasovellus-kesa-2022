@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, session
+from flask import flash, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import app
 from db import db
@@ -19,10 +19,10 @@ def login():
         password = request.form["password"]
 
         if users.login(username, password):
-            print("####welcome", username)
+            flash("Welcome " + username)
             return redirect("/")
         else:
-            print("####invalid username or password")
+            flash("Invalid username or password")
             return redirect("/login")
                 
 @app.route("/register", methods=["GET", "POST"])
@@ -38,25 +38,26 @@ def register():
         role = request.form["role"]
 
         if len(username) < 3 or len(username) > 20:
-            print("####length of username must be between 3 and 20")
+            flash("Length of username must be between 3 and 20")
             return redirect("/register")
 
         if len(password1) < 5:
-            print("####length of password must be at least 5")
+            flash("Length of password must be at least 5")
             return redirect("/register")
 
         if users.user_exists(username):
-            print("####username already taken")
+            flash("Username already taken")
             return redirect("/register")
         else:
             if password1 != password2:
-                print("####passwords don't match")
+                flash("Passwords don't match")
                 return redirect("/register")
 
         if users.register(username, password1, role):
-            print("####welcome", username, "!")
+            flash("Welcome " + username)
             return redirect("/")
         else:
+            #TODO: return error page
             print("####something went wrong :-(")
     
 @app.route("/logout")
