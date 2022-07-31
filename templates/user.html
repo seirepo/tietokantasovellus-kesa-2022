@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
-{% block title %}{% endblock %}
+{% block title %}{{ username }}{% endblock %}
 {% block content %}
-hahó
+Sets <p>
+    {% if count == 0 %}
+    No sets :-(
+    {% else %}
+        {% for set in sets %}
+            <b>{{ set.name }}</b>
+            <br>
+            {{set.description }}
+            <br><br>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

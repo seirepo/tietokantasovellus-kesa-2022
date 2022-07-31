@@ -72,6 +72,9 @@ def result():
     users = result.fetchall()
     return render_template("result.html", users=users, count=len(users))
 
-@app.route("/<string:username>")
-def show_user(username):
-    return render_template("user.html")
+@app.route("/<int:id>")
+def show_user(id):
+    sql = "SELECT name, description FROM sets WHERE creator_id=:id"
+    result = db.session.execute(sql, {"id":id})
+    sets = result.fetchall()
+    return render_template("user.html", count=len(sets), sets=sets)
