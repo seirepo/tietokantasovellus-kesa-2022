@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}{{ username }}{% endblock %}
 {% block content %}
-Sets <p>
+{{ username }}'s sets <p>
     {% if count == 0 %}
     No sets :-(
     {% else %}
@@ -9,6 +9,11 @@ Sets <p>
             <b>{{ set.name }}</b>
             <br>
             {{set.description }}
+            <br>
+            <a href="/play/{{ set.id }}">Play</a>
+            {% if creator == session.user_id %}
+            <a href="/edit/{{ set.id }}">Edit</a>
+            {% endif %}
             <br><br>
         {% endfor %}
     {% endif %}

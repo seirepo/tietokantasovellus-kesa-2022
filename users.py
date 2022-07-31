@@ -41,3 +41,9 @@ def register(username, password, role):
 
 def logout():
     del session["username"]
+
+def get_username(id):
+    sql = "SELECT username FROM users WHERE id=:id"
+    result = db.session.execute(sql, {"id":id})
+    user = result.fetchone()
+    return user.username

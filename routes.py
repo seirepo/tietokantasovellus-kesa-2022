@@ -74,7 +74,11 @@ def result():
 
 @app.route("/<int:id>")
 def show_user(id):
-    sql = "SELECT name, description FROM sets WHERE creator_id=:id"
+    username = users.get_username(id)
+    if id == session["user_id"]:
+        sql = "SELECT name, description, id FROM sets WHERE creator_id=:id"
+    else:
+        sql = "SELECT name, description, id FROM sets WHERE creator_id=:id AND private=0"
     result = db.session.execute(sql, {"id":id})
     sets = result.fetchall()
-    return render_template("user.html", count=len(sets), sets=sets)
+    return render_template("user.html", count=len(sets), username=username, sets=sets, creator=id)
