@@ -91,3 +91,8 @@ def create():
     else:
         #TODO: add an error message "log in to create a new set" or sth
         return redirect("/login")
+
+@app.route("/play/<int:id>")
+def play(id):
+    #TODO: actual implementation
+    return render_template("play.html")
