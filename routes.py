@@ -82,3 +82,11 @@ def show_user(id):
     result = db.session.execute(sql, {"id":id})
     sets = result.fetchall()
     return render_template("user.html", count=len(sets), username=username, sets=sets, creator=id)
+
+@app.route("/create")
+def create():
+    if session.get("username"):
+        return render_template("create.html")
+    else:
+        #TODO: add an error message "log in to create a new set" or sth
+        return redirect("/login")
