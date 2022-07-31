@@ -41,6 +41,8 @@ def register(username, password, role):
 
 def logout():
     del session["username"]
+    del session["user_id"]
+    del session["user_role"]
 
 def get_username(id):
     sql = "SELECT username FROM users WHERE id=:id"
