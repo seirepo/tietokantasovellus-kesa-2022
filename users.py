@@ -36,3 +36,6 @@ def register(username, password, role):
     except:
         return False;
     return login(username, password)
+
+def logout():
+    del session["username"]
