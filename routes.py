@@ -71,3 +71,7 @@ def result():
     result = db.session.execute(sql, {"query":"%"+query+"%"})
     users = result.fetchall()
     return render_template("result.html", users=users, count=len(users))
+
+@app.route("/<string:username>")
+def show_user(username):
+    return render_template("user.html")
