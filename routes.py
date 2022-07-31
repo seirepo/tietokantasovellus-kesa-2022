@@ -84,14 +84,22 @@ def show_user(id):
     sets = result.fetchall()
     return render_template("user.html", count=len(sets), username=username, sets=sets, creator=id)
 
-@app.route("/add-new-set")
+@app.route("/add-new-set", methods=["GET", "POST"])
 def add_new_set():
-    if session.get("username"):
-        #TODO: actual implementation
-        return render_template("add-new-set.html")
-    else:
-        #TODO: add an error message "log in to create a new set" or sth
-        return redirect("/login")
+    if request.method == "GET":
+        if session.get("username"):
+            #TODO: actual implementation
+            return render_template("add-new-set.html")
+        else:
+            #TODO: add an error message "log in to create a new set" or sth
+            return redirect("/login")
+    if request.method == "POST":
+        flash("New set added")
+        #TODO: users.check_csrf()
+        #TODO: handle request form parameters
+        #TODO: check params
+        #TODO: return to user's page
+        return redirect("/")
 
 @app.route("/play/<int:id>")
 def play(id):
