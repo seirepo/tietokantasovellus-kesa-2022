@@ -10,6 +10,9 @@ CREATE TABLE sets (
     name TEXT,
     creator_id INTEGER REFERENCES users,
     description TEXT,
+    card_order INT,
+    term TEXT DEFAULT 'term',
+    definition TEXT DEFAULT 'definition',
     private INT
 );
 
