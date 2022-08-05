@@ -101,31 +101,36 @@ def add_new_set():
         name = request.form["name"]
         if len(name) < 1 or len(name) > 20:
             flash("Name length must be between 1-20")
+            redirect("/add-new-set")
 
         description = request.form["description"]
         if len(description) > 100:
             flash("Description too long: " + len(description) + "> 100")
+            redirect("/add-new-set")
 
         words = request.form["words"]
         if len(words) > 1000:
             flash("Word list too long: " + len(words) + " > 1000")
+            redirect("/add-new-set")
 
         term = request.form["term"]
         if len(term) > 20:
             flash("Term too long: " + len(term) + " > 20")
+            redirect("/add-new-set")
 
         definition = request.form["definition"]
         if len(definition) > 20:
             flash("Definition too long: " + len(term) + " > 20")
+            redirect("/add-new-set")
 
         private = request.form["private"]
         if private not in ("0", "1"):
             flash("Unsupported visibility selection")
+            redirect("/add-new-set")
 
         creator_id = users.current_user_id()
         sets.add_new_set(name, description, words, term, definition, private, creator_id)
 
-        #TODO: return to user's page
         return redirect("/" + str(creator_id))
 
 @app.route("/play/<int:id>")
