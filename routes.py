@@ -35,8 +35,10 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
 
-        #TODO: validate role
         role = request.form["role"]
+        if role not in ("0", "1"):
+            flash("Unsupported role")
+            return redirect("/register")
 
         if len(username) < 3 or len(username) > 20:
             flash("Length of username must be between 3 and 20")
