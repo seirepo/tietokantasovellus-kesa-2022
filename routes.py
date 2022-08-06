@@ -134,13 +134,11 @@ def add_new_set():
 @app.route("/remove-sets", methods=["GET", "POST"])
 def remove():
     if request.method == "GET":
-        print("####GET remove-sets")
         if users.current_user():
-            user_sets = sets.get_sets(users.current_user_id())
+            user_sets = sets.get_sets(users.current_user_id(), 0)
             return render_template("remove-sets.html", sets=user_sets)
 
     if request.method == "POST":
-        print("####POST remove-sets")
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         set_ids = request.form.getlist("selection")
