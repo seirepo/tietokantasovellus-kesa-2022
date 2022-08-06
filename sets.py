@@ -25,3 +25,13 @@ def get_sets(creator_id, only_public):
     result = db.session.execute(sql, {"creator_id":creator_id})
     sets = result.fetchall()
     return sets
+
+def remove_sets(set_ids):
+    for set_id in set_ids:
+        try:
+            sql = """DELETE FROM sets WHERE id=:id"""
+            db.session.execute(sql, {"id":set_id})
+            db.session.commit()
+        except:
+            print("####Removing set ", set_id, " failed!")
+            return False

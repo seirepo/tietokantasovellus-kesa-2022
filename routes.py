@@ -145,6 +145,8 @@ def remove():
         print("####poistettavat: ", set_ids)
 
         #TODO: remove sets and cards in them from db
+        sets.remove_sets(set_ids)
+
         return redirect("/" + str(users.current_user_id()))
 
 @app.route("/play/<int:id>")
