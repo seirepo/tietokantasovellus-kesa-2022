@@ -133,6 +133,24 @@ def add_new_set():
 
         return redirect("/" + str(creator_id))
 
+@app.route("/remove-sets", methods=["GET", "POST"])
+def remove():
+    if request.method == "GET":
+        print("####GET remove-sets")
+        if users.current_user():
+            user_sets = sets.all_sets(users.current_user_id())
+            return render_template("remove-sets.html", sets=user_sets)
+
+    if request.method == "POST":
+        print("####POST remove-sets")
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        set_ids = request.form.getlist("selection")
+        print("####poistettavat: ", set_ids)
+
+        #TODO: remove sets and cards in them from db
+        return redirect("/" + str(users.current_user_id()))
+
 @app.route("/play/<int:id>")
 def play(id):
     #TODO: actual implementation

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}Remove sets{% endblock %}
+{% block content %}
+
+<form action="/remove-sets" method="POST">
+    <h3>Select sets to be removed:</h3>
+    {% for set in sets %}
+            <b>{{ set.name }}</b>
+            <br>
+            {{ set.description }}
+            <input type="checkbox" name="selection" value="{{ set.id }}">
+            <br><br>
+    {% endfor %}
+    <br><br>
+    <input type="submit" value="Remove">
+    <a href="/{{ session.user_id }}">Cancel</a>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+{% endblock %}
