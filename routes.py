@@ -80,12 +80,10 @@ def result():
 def show_user(id):
     username = users.get_username(id)
     if id == session["user_id"]:
-        sql = "SELECT name, description, id FROM sets WHERE creator_id=:id"
+        user_sets = sets.get_sets(id, 0)
     else:
-        sql = "SELECT name, description, id FROM sets WHERE creator_id=:id AND private=0"
-    result = db.session.execute(sql, {"id":id})
-    sets = result.fetchall()
-    return render_template("user.html", count=len(sets), username=username, sets=sets, creator=id)
+        user_sets = sets.get_sets(id, 1)
+    return render_template("user.html", count=len(user_sets), username=username, sets=user_sets, creator=id)
 
 @app.route("/add-new-set", methods=["GET", "POST"])
 def add_new_set():
@@ -138,7 +136,7 @@ def remove():
     if request.method == "GET":
         print("####GET remove-sets")
         if users.current_user():
-            user_sets = sets.all_sets(users.current_user_id())
+            user_sets = sets.get_sets(users.current_user_id())
             return render_template("remove-sets.html", sets=user_sets)
 
     if request.method == "POST":

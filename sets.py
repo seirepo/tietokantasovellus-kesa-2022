@@ -17,8 +17,11 @@ def add_new_set(name, description, words, term, definition, private, creator_id)
         db.session.execute(sql, {"set_id":set_id, "word1":pair[0], "word2":pair[1]})
     db.session.commit()
 
-def all_sets(creator_id):
-    sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id"""
+def get_sets(creator_id, only_public):
+    if only_public:
+        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id AND private=0"""
+    else:
+        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id"""
     result = db.session.execute(sql, {"creator_id":creator_id})
     sets = result.fetchall()
     return sets
