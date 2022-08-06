@@ -17,7 +17,7 @@ CREATE TABLE sets (
 
 CREATE TABLE cards (
     id SERIAL PRIMARY KEY,
-    set_id INTEGER REFERENCES sets,
+    set_id INTEGER REFERENCES sets ON DELETE CASCADE,
     word1 TEXT,
     word2 TEXT
 );
