@@ -1,16 +1,20 @@
 # Wordslet: sovellus vieraan kielen sanojen opiskeluun
 
 ## Käyttö
-Sovelluksella voi harjoitella esimerkiksi vieraan kielen sanoja. Sovellusta voi käyttää opettajana tai opiskelijana. Sanakokoelmia voi hakea niiden nimellä tai ne luoneen käyttäjän nimellä.
+Sovelluksella voi harjoitella esimerkiksi vieraan kielen sanoja. Sovellusta voi käyttää normaalina käyttäjänä tai tähtikäyttäjänä. Sanakokoelmia voi hakea niiden nimellä tai ne luoneen käyttäjän nimellä.
 
-Opiskelija voi
-- [ ] luoda oman sanakokoelman
+- [x] sovellukseen voi luoda uuden käyttäjän
+- [x] sovellukseen voi kirjautua olemassaolevana käyttäjänä
+- [x] sovelluksessa voi lisätä oman sanasetin
+
+Normaali käyttäjä voi
+- [x] luoda oman sanakokoelman
 - [ ] lisätä olemassaoleviin sanakokoelmiin uusia sanoja
-- [ ] poistaa kokoelmasta sanoja
+- [x] poistaa kokoelmasta sanoja
 - [ ] harjoitella sanakokoelmia
 - [ ] muokata kokoelman sanoja
 
-Opettaja voi
+Tähtikäyttäjä voi
 - [ ] tehdä kaiken mitä opiskelijakin
 - [ ] luoda ryhmän opiskelijoille
 - [ ] jakaa ryhmälle yhden tai useamman sanakokoelman harjoiteltavaksi
@@ -20,7 +24,7 @@ Kirjautumaton käyttäjä voi selata ja harjoitella sanakokoelmia.
 
 ## Sanakokoelmat
 Sanakokoelmista näkyvät tiedot:
-- [ ] nimi (pakollinen)
+- [x] nimi (pakollinen)
 - [ ] sanojen määrä
 - [ ] kokoelman luonut käyttäjä
 - [ ] käyttäjän kirjoittama kuvaus (vapaaehtoinen)
