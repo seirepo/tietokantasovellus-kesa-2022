@@ -137,14 +137,14 @@ def remove():
         if users.current_user():
             user_sets = sets.get_sets(users.current_user_id(), 0)
             return render_template("remove-sets.html", sets=user_sets)
+        else:
+            #TODO: add an error message "log in to create and remove sets" or sth
+            return redirect("/login")
 
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         set_ids = request.form.getlist("selection")
-        print("####poistettavat: ", set_ids)
-
-        #TODO: remove sets and cards in them from db
         sets.remove_sets(set_ids)
 
         return redirect("/" + str(users.current_user_id()))
