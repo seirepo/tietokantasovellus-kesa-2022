@@ -154,7 +154,34 @@ def play(id):
     #TODO: actual implementation
     return render_template("play.html")
 
-@app.route("/edit-set/<int:id>")
+@app.route("/edit-set/<int:id>", methods=["GET", "POST"])
 def edit_set(id):
     #TODO: actual implementation
-    return render_template("edit-set.html")
+    if request.method == "GET":
+        if users.current_user():
+            #TODO: render edit-set.html
+            set = sets.get_set_info(id)
+            cards = sets.get_cards(id)
+            return render_template("edit-set.html", set=set, cards=cards, set_id=id)
+        else:
+            #TODO: add an error message "log in to create and remove sets" or sth
+            return redirect("/login")
+
+    if request.method == "POST":
+        #TODO: implement edit
+        word1 = request.form.getlist("word1")
+        word2 = request.form.getlist("word2")
+        card_ids = request.form.getlist("card id")
+        remove_ids = request.form.getlist("remove card")
+        cards = dict(zip(card_ids, zip(word1, word2)))
+        print("####cards:", cards)
+        print("####card ids to be removed:", remove_ids)
+
+        for id in remove_ids:
+            del cards[id]
+
+        #TODO: check that user can't remove all words from set
+
+        sets.update_cards(cards)
+        sets.remove_cards(remove_ids)
+    return redirect("/" + str(users.current_user_id()))

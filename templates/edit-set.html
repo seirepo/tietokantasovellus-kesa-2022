@@ -1,5 +1,48 @@
 {% extends "layout.html" %}
-{% block title %}Main{% endblock %}
+{% block title %}Edit set{% endblock %}
 {% block content %}
-TODO: edit set
+<h2>Edit set</h2>
+
+<form action="/edit-set/{{ set_id }}" method="post">
+    <p>Name:
+    <input type="text" name="name" minlength="1" maxlength="20" value="{{ set.name }}"></p>
+    <p>Description:
+    <input type="text" name="description" maxlength="100" value="{{ set.description }}"></p>
+
+    <p>Cards:<br>
+    {% for card in cards %}
+    <ul>
+        <li>
+            <input type="text" name="word1" minlength="1" maxlength="200" value="{{ card.word1 }}">
+            <input type="text" name="word2" minlength="1" maxlength="200" value="{{ card.word2 }}">
+            <input type="hidden" name="card id" minlength="1" maxlength="200" value="{{ card.id }}">
+            <input type="checkbox" name="remove card" value="{{ card.id }}">Remove
+            <br><br>
+        </li>
+    </ul>
+    {% endfor %}
+
+    <p>Add new words:<br>
+    <textarea name="words" placeholder="Ex. cat;kissa" rows="8" cols="40" maxlength="10000"></textarea></p>
+
+    <p>Term (optional):
+    <input type="text" name="term" placeholder="term" maxlength="20" value="{{ set.term }}"></p>
+    <p>Definition (optional):
+    <input type="text" name="definition" placeholder="definition" maxlength="20" value="{{ set.definition }}"></p>
+
+    {% if set.private == 1 %}
+        <input type="radio" name="private" value=0 checked> Public
+        <input type="radio" name="private" value=1> Private
+    {% else %}
+        <input type="radio" name="private" value=0> Public
+        <input type="radio" name="private" value=1 checked> Private
+    {% endif %}
+    <p>
+
+    <input type="submit" value="OK">
+    <a href="/{{ session.user_id }}">Cancel</a>
+
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+</form>
 {% endblock %}

@@ -35,3 +35,29 @@ def remove_sets(set_ids):
         except:
             print("####Removing set ", set_id, " failed!")
             return False
+
+def get_set_info(set_id):
+    sql = """SELECT id, name, description, term, definition, private
+             FROM sets WHERE id=:id"""
+    result = db.session.execute(sql, {"id":set_id})
+    info = result.fetchone()
+    return info
+
+def get_cards(set_id):
+    sql = """SELECT id, word1, word2 FROM cards WHERE set_id=:set_id"""
+    cards = db.session.execute(sql, {"set_id":set_id}).fetchall()
+    return cards
+
+def update_cards(cards):
+    #TODO: update cards
+    pass
+
+def remove_cards(ids):
+    #TODO: remove cards
+    for id in ids:
+        try:
+            sql = """DELETE FROM cards WHERE id=:id"""
+            db.session.execute(sql, {"id":id})
+            db.session.commit()
+        except:
+            print("####Removing card with id", id, "failed")
