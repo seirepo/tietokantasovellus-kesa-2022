@@ -1,11 +1,13 @@
 # Wordslet: sovellus vieraan kielen sanojen opiskeluun
 
+#### 07.08.2022
+Herokussa voi luoda uuden käyttäjän, kirjautua sovellukseen ja tehdä oman sanakokoelman, joka näkyy käyttäjän omilla sivuilla. Luotuja kokoelmia voi myös poistaa. Tällä hetkellä muokkauksesta toimii vain yksitäisten sanojen poisto. Käyttäjiä voi myös hakea hakupalkista.
+
 ## Käyttö
 Sovelluksella voi harjoitella esimerkiksi vieraan kielen sanoja. Sovellusta voi käyttää normaalina käyttäjänä tai tähtikäyttäjänä. Sanakokoelmia voi hakea niiden nimellä tai ne luoneen käyttäjän nimellä.
 
 - [x] sovellukseen voi luoda uuden käyttäjän
 - [x] sovellukseen voi kirjautua olemassaolevana käyttäjänä
-- [x] sovelluksessa voi lisätä oman sanasetin
 
 Normaali käyttäjä voi
 - [x] luoda oman sanakokoelman
@@ -13,6 +15,7 @@ Normaali käyttäjä voi
 - [x] poistaa kokoelmasta sanoja
 - [ ] harjoitella sanakokoelmia
 - [ ] muokata kokoelman sanoja
+- [x] poistaa kokoelman
 
 Tähtikäyttäjä voi
 - [ ] tehdä kaiken mitä opiskelijakin
