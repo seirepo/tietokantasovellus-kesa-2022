@@ -10,7 +10,7 @@
             <br>
             {{set.description }}
             <br>
-            <a href="/play/{{ set.id }}">Play</a>
+            <a href="/set/{{ set.id }}">Play</a>
             {% if creator == session.user_id %}
             <a href="/edit-set/{{ set.id }}">Edit</a>
             {% endif %}

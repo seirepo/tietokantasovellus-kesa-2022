@@ -1,3 +1,4 @@
+from queue import Empty
 from flask import flash, redirect, render_template, request, session, abort
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import app
@@ -149,10 +150,25 @@ def remove():
 
         return redirect("/" + str(users.current_user_id()))
 
-@app.route("/play/<int:id>")
-def play(id):
-    #TODO: actual implementation
-    return render_template("play.html")
+@app.route("/set/<int:id>")
+def set(id):
+    set = sets.get_set_info(id)
+    cards = sets.get_cards(id)
+    return render_template("set.html", set=set, card_count=len(cards))
+
+@app.route("/play/<int:set_id>/<int:card_id>", methods=["GET", "POST"])
+def play(set_id, card_id):
+    cards = sets.get_cards(set_id)
+    #print("####cards:", cards)
+    #print("####url:", request.url)
+    if request.method == "GET":
+        return render_template("play.html")#, set_id=set_id, card=cards[0])
+
+    if request.method == "POST":
+        response = request.form["response"]
+        if len(response.strip()) == 0:
+            flash("Answer cannot be empty")
+            return redirect(request.url)
 
 @app.route("/edit-set/<int:id>", methods=["GET", "POST"])
 def edit_set(id):

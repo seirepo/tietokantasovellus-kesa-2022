@@ -1,5 +1,16 @@
 {% extends "layout.html" %}
-{% block title %}play{% endblock %}
+{% block title %}Play{% endblock %}
 {% block content %}
-TODO: play
+
+<form action="/play/{{ set_id }}/{{ card_id }}" method="post">
+
+    <input type="text" name="response">
+    <input type="submit" value="OK">
+    <br>
+    <a href="/{{ session.user_id }}">Stop</a>
+
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+</form>
+
 {% endblock %}
