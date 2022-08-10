@@ -29,6 +29,7 @@ def login():
                 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    #TODO: refactor function
     if request.method == "GET":
         return render_template("register.html")
     if request.method == "POST":
@@ -36,6 +37,7 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
 
+        #TODO: checks to a separate validate function
         role = request.form["role"]
         if role not in ("0", "1"):
             flash("Unsupported role")
@@ -88,6 +90,7 @@ def show_user(id):
 
 @app.route("/add-new-set", methods=["GET", "POST"])
 def add_new_set():
+    #TODO: refactor function
     if request.method == "GET":
         if users.current_user():
             return render_template("add-new-set.html")
@@ -97,6 +100,8 @@ def add_new_set():
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
+
+        #TODO: move validation to a separate method
         name = request.form["name"]
         if len(name) < 1 or len(name) > 20:
             flash("Name length must be between 1-20")
