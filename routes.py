@@ -98,39 +98,41 @@ def add_new_set():
             #TODO: add an error message "log in to create a new set" or sth
             return redirect("/login")
     if request.method == "POST":
+        #TODO: move check to separate function
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
-
+        
+        #TODO: make sure that empty set cannot be saved
         #TODO: move validation to a separate method
         name = request.form["name"]
         if len(name) < 1 or len(name) > 20:
             flash("Name length must be between 1-20")
-            redirect("/add-new-set")
+            return redirect("/add-new-set")
 
         description = request.form["description"]
         if len(description) > 100:
             flash("Description too long: " + len(description) + "> 100")
-            redirect("/add-new-set")
+            return redirect("/add-new-set")
 
         words = request.form["words"]
         if len(words) > 1000:
             flash("Word list too long: " + len(words) + " > 1000")
-            redirect("/add-new-set")
+            return redirect("/add-new-set")
 
         term = request.form["term"]
         if len(term) > 20:
             flash("Term too long: " + len(term) + " > 20")
-            redirect("/add-new-set")
+            return redirect("/add-new-set")
 
         definition = request.form["definition"]
         if len(definition) > 20:
             flash("Definition too long: " + len(term) + " > 20")
-            redirect("/add-new-set")
+            return redirect("/add-new-set")
 
         private = request.form["private"]
         if private not in ("0", "1"):
             flash("Unsupported visibility selection")
-            redirect("/add-new-set")
+            return redirect("/add-new-set")
 
         creator_id = users.current_user_id()
         sets.add_new_set(name, description, words, term, definition, private, creator_id)
