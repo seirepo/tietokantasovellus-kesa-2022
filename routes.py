@@ -105,8 +105,8 @@ def add_new_set():
         #TODO: make sure that empty set cannot be saved
         #TODO: move validation to a separate method
         name = request.form["name"]
-        if len(name) < 1 or len(name) > 20:
-            flash("Name length must be between 1-20")
+        if len(name) < 1 or len(name) > 100:
+            flash("Name length must be between 1-100")
             return redirect("/add-new-set")
 
         description = request.form["description"]
@@ -115,18 +115,18 @@ def add_new_set():
             return redirect("/add-new-set")
 
         words = request.form["words"]
-        if len(words) > 1000:
-            flash("Word list too long: " + len(words) + " > 1000")
+        if len(words) > 10000:
+            flash("Word list too long: " + len(words) + " > 10000")
             return redirect("/add-new-set")
 
         term = request.form["term"]
-        if len(term) > 20:
-            flash("Term too long: " + len(term) + " > 20")
+        if len(term) > 100:
+            flash("Term too long: " + len(term) + " > 100")
             return redirect("/add-new-set")
 
         definition = request.form["definition"]
-        if len(definition) > 20:
-            flash("Definition too long: " + len(term) + " > 20")
+        if len(definition) > 100:
+            flash("Definition too long: " + len(term) + " > 100")
             return redirect("/add-new-set")
 
         private = request.form["private"]
