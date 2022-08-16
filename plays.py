@@ -49,3 +49,5 @@ def clear_latest(user_id, set_id):
     db.session.execute(sql, {"user_id":user_id, "set_id":set_id})
     db.session.commit()
 
+def check_result(response, card_id, game_id):
+    pass

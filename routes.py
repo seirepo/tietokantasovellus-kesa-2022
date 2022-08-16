@@ -167,27 +167,46 @@ def set(set_id):
     current_user_id = users.current_user_id()
     if request.method == "GET":
         set = sets.get_set_info(set_id)
+        print("####set info acquired:", set)
+        print("####especially term", set.term, "(",  "), definition", set.definition, "(", type(set.definition), ")")
         cards = sets.get_cards(set_id)
 
         if not current_user_id:
             return render_template("set.html", set=set, card_count=len(cards), cards=cards)
         game_id = plays.get_latest_game_id(current_user_id, set_id)
-
         return render_template("set.html", set=set, card_count=len(cards), cards=cards, game_id=game_id)
+
     if request.method == "POST":
         if not current_user_id:
             flash("Log in to play")
             return redirect("/login")
 
+        #TODO: refactor the following
         if request.form["submit_button"] == "Continue":
             game_id = request.form["game_id"]
             print("####got game id", game_id)
             card = plays.get_random_card(game_id)
-            return render_template("play.html", set_id=set_id, card=card)
+
+            answer_with = request.form["answer_with"]
+            if answer_with not in ("1", "2"):
+                flash("You must answer with either the term of definition")
+                return redirect(request.url)
+
+            print("####set post continue got answer with", answer_with)
+            return render_template("play.html", set_id=set_id, game_id=game_id, card=card, answer_with=answer_with)
+
         elif request.form["submit_button"] == "Start a new game":
             new_game_id = plays.setup_new_game(current_user_id, set_id)
             card = plays.get_random_card(new_game_id)
-            return render_template("play.html", set_id=set_id, card=card)
+
+            answer_with = request.form["answer_with"]
+            if answer_with not in ("1", "2"):
+                flash("You must answer with either the term of definition")
+                return redirect(request.url)
+
+            print("####set post new game got answer with", answer_with)
+            return render_template("play.html", set_id=set_id, game_id=new_game_id, card=card, answer_with=answer_with)
+
         else:
             flash("Unknown submit value")
             return redirect(request.url)
@@ -201,6 +220,16 @@ def play(set_id):
         if not current_user_id:
             flash("Log in to play")
             return redirect("/login")
+
+        response = request.form["response"]
+        card_id = request.form["card_id"]
+        game_id = request.form["game_id"]
+        answer_with = request.form["answer_with"]
+        print("####got response", response, "to card id", card_id, "in game", game_id, "answer with", answer_with)
+
+        plays.check_result(response, card_id, game_id)
+        next_card = plays.get_random_card(game_id)
+        return render_template("play.html", set_id=set_id, game_id=game_id, card=next_card, answer_with=answer_with)
 
 
 @app.route("/edit-set/<int:id>", methods=["GET", "POST"])

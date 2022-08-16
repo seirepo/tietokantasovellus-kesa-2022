@@ -3,8 +3,16 @@
 {% block content %}
 
 <form action="/play/{{ set_id }}" method="post">
-    {{ card.word1 }} <br>
+    answer with: {{ answer_with }}
+    {% if answer_with == 2 %}
+        {{ card.word1 }} <br>
+    {% else %}
+        {{ card.word2 }} <br>
+    {% endif %}
     <input type="text" name="response">
+    <input type="hidden" name="game_id" value="{{ game_id }}">
+    <input type="hidden" name="card_id" value="{{ card.id }}">
+    <input type="hidden" name="answer_with" value="{{ answer_with }}">
     <input type="submit" value="OK">
     <br>
     {{ set_id }}
