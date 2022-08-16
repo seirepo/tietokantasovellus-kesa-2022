@@ -79,7 +79,12 @@ def get_answer_with(game_id):
     result = db.session.execute(sql, {"game_id":game_id}).fetchone()
     return result
 
-def get_card_results(game_id):
-    sql = """SELECT card_id, times_guessed_wrong FROM card_results WHERE latest_game_id=:game_id"""
+def get_card_results_ordered(game_id):
+    #sql = """SELECT card_id, times_guessed_wrong FROM card_results WHERE latest_game_id=:game_id"""
+    sql = """SELECT cards.word1, cards.word2, results.times_guessed_wrong,
+             results.time_guessed
+             FROM cards, card_results AS results
+             WHERE cards.id=results.card_id AND results.latest_game_id=:game_id
+             ORDER BY results.times_guessed_wrong DESC, results.time_guessed DESC;"""
     results = db.session.execute(sql, {"game_id":game_id}).fetchall()
     return results

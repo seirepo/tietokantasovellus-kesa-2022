@@ -2,6 +2,13 @@
 {% block title %}Play{% endblock %}
 {% block content %}
 
-<h1>FINISH</h1>
+<h1>Finished set {{ set.name }}</h1>
+<p>{{ set.description }}</p>
 
+<h2>Cards ({{ card_count }})</h2>
+{% for card in results %}
+    <p>{{ card.word1 }} - {{ card.word2 }}, {{ card.times_guessed_wrong }}</p>
+{% endfor %}
+
+<a href="/set/{{ set.id }}">Back to set</a>
 {% endblock %}
