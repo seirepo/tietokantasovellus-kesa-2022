@@ -62,13 +62,14 @@ def check_result(response, card_id, game_id, answer_with):
         correct = card.word2
 
     if response.lower() == correct.lower():
-        sql = """UPDATE card_results SET result=1
+        sql = """UPDATE card_results SET result=1, time_guessed=NOW()
                  WHERE latest_game_id=:latest_game_id AND card_id=:card_id"""
         result = True
     else:
         sql = """UPDATE card_results SET times_guessed_wrong=times_guessed_wrong + 1
                  WHERE latest_game_id=:latest_game_id AND card_id=:card_id"""
         result = False
+    print("####executing", sql)
     db.session.execute(sql, {"latest_game_id":game_id, "card_id":card_id})
     db.session.commit()
     return result
@@ -77,3 +78,8 @@ def get_answer_with(game_id):
     sql = """SELECT answer_with FROM latest_games WHERE id=:game_id"""
     result = db.session.execute(sql, {"game_id":game_id}).fetchone()
     return result
+
+def get_card_results(game_id):
+    sql = """SELECT card_id, times_guessed_wrong FROM card_results WHERE latest_game_id=:game_id"""
+    results = db.session.execute(sql, {"game_id":game_id}).fetchall()
+    return results

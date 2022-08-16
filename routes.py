@@ -220,12 +220,12 @@ def play(set_id):
         if not game_id:
             return redirect("/set/" + str(set_id))
 
-        #TODO: check if all cards are correctly guessed
         next_card = plays.get_random_card(game_id)
-
         if not next_card:
             results = plays.get_card_results(game_id)
-            return render_template("finish.html", results=results)
+            set_info = sets.get_set_info(set_id)
+            #TODO: update stats
+            return render_template("finish.html", results=results, set_info=set_info, game_id=game_id)
 
         answer_with = plays.get_answer_with(game_id)[0]
         return render_template("play.html", set_id=set_id, game_id=game_id, card=next_card, answer_with=answer_with)
@@ -251,7 +251,6 @@ def play(set_id):
             correct_answer = card.word2
 
         return render_template("card-result.html", set_id=set_id, word=word_to_guess, correct=correct, response=response, correct_answer=correct_answer)
-
 
 @app.route("/edit-set/<int:id>", methods=["GET", "POST"])
 def edit_set(id):
