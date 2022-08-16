@@ -171,18 +171,33 @@ def set(set_id):
 
         return render_template("set.html", set=set, card_count=len(cards), cards=cards, game_id=game_id)
     if request.method == "POST":
+        if not current_user_id:
+            flash("Log in to play")
+            return redirect("/login")
+
         if request.form["submit_button"] == "Continue":
-            return render_template("play.html", set_id=set_id)
+            game_id = request.form["game_id"]
+            print("####got game id", game_id)
+            card = plays.get_random_card(game_id)
+            return render_template("play.html", set_id=set_id, card=card)
         elif request.form["submit_button"] == "Start a new game":
-            plays.setup_new_game(current_user_id, set_id)
-            return render_template("play.html", set_id=set_id)
+            new_game_id = plays.setup_new_game(current_user_id, set_id)
+            card = plays.get_random_card(new_game_id)
+            return render_template("play.html", set_id=set_id, card=card)
         else:
             flash("Unknown submit value")
             return redirect(request.url)
 
 @app.route("/play/<int:set_id>", methods=["GET", "POST"])
 def play(set_id):
-    return render_template("play.html", set_id=set_id)
+    if request.method == "GET":
+        return redirect("/set/" + str(set_id))
+    if request.method == "POST":
+        current_user_id = users.current_user_id()
+        if not current_user_id:
+            flash("Log in to play")
+            return redirect("/login")
+
 
 @app.route("/edit-set/<int:id>", methods=["GET", "POST"])
 def edit_set(id):
