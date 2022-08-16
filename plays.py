@@ -8,6 +8,9 @@ def get_latest_game_id(user_id, set_id):
     return id
 
 def setup_new_game(user_id, set_id):
+    print("####set up new game", set_id, "for", user_id)
+    clear_latest(user_id, set_id)
+    print("####previous game cleared")
     sql = """INSERT INTO latest_games (user_id, set_id)
     VALUES (:user_id, :set_id) RETURNING id"""
     game_id = db.session.execute(sql, {"user_id":user_id, "set_id":set_id}).fetchone()[0]
@@ -36,8 +39,8 @@ def get_random_card(game_id):
     LIMIT 1
     """
 
-def clear_latest(user_id):
-    sql = """DELETE FROM latest_games WHERE user_id=:user_id"""
-    db.session.execute(sql, {"user_id":user_id})
+def clear_latest(user_id, set_id):
+    sql = """DELETE FROM latest_games WHERE user_id=:user_id AND set_id=:set_id"""
+    db.session.execute(sql, {"user_id":user_id, "set_id":set_id})
     db.session.commit()
 

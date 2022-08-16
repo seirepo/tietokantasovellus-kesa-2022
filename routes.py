@@ -160,11 +160,11 @@ def remove():
 
 @app.route("/set/<int:set_id>", methods=["GET", "POST"])
 def set(set_id):
+    current_user_id = users.current_user_id()
     if request.method == "GET":
         set = sets.get_set_info(set_id)
         cards = sets.get_cards(set_id)
 
-        current_user_id = users.current_user_id()
         if not current_user_id:
             return render_template("set.html", set=set, card_count=len(cards), cards=cards)
 
@@ -183,13 +183,11 @@ def set(set_id):
             return render_template("play.html", set_id=set_id)
         elif request.form["submit_button"] == "Start a new game":
             print("####button NEW GAME")
+            plays.setup_new_game(current_user_id, set_id)
             return render_template("play.html", set_id=set_id)
         else:
             flash("Unknown submit value")
             return redirect(request.url)
-
-
-
 
 @app.route("/play/<int:set_id>", methods=["GET", "POST"])
 def play(set_id):
