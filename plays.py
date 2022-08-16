@@ -5,7 +5,10 @@ def get_latest_game_id(user_id, set_id):
     sql = """SELECT id FROM latest_games WHERE user_id=:user_id AND set_id=:set_id"""
     result = db.session.execute(sql, {"user_id":user_id, "set_id":set_id})
     id = result.fetchone()
-    return id
+    if id:
+        return id[0]
+    else:
+        return id
 
 def setup_new_game(user_id, set_id):
     print("####set up new game", set_id, "for", user_id)
