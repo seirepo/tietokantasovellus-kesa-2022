@@ -6,9 +6,9 @@
 
 <form action="/set/{{ set.id }}" method="post">
     {% if game_id %}
-        <input type="submit" value="Continue">
+        <input type="submit" name="submit_button" value="Continue">
     {% endif %}
-    <input type="submit" value="Start a new game">
+    <input type="submit" name="submit_button" value="Start a new game">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 

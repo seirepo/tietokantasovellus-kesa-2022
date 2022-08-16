@@ -160,20 +160,36 @@ def remove():
 
 @app.route("/set/<int:set_id>", methods=["GET", "POST"])
 def set(set_id):
-    set = sets.get_set_info(set_id)
-    cards = sets.get_cards(set_id)
+    if request.method == "GET":
+        set = sets.get_set_info(set_id)
+        cards = sets.get_cards(set_id)
 
-    current_user_id = users.current_user_id()
-    if not current_user_id:
-        return render_template("set.html", set=set, card_count=len(cards), cards=cards)
+        current_user_id = users.current_user_id()
+        if not current_user_id:
+            return render_template("set.html", set=set, card_count=len(cards), cards=cards)
 
-    #TODO: check if user has a non finished game on this set, if yes then
-    # add a continue button, if not, then just a start new game button
-    # this should probably be a POST form
-    game_id = plays.get_latest_game_id(current_user_id, set_id)
+        #TODO: check if user has a non finished game on this set, if yes then
+        # add a continue button, if not, then just a start new game button
+        # this should probably be a POST form
+        game_id = plays.get_latest_game_id(current_user_id, set_id)
 
-    # TODO: start new game
-    return render_template("set.html", set=set, card_count=len(cards), cards=cards, game_id=game_id)
+        return render_template("set.html", set=set, card_count=len(cards), cards=cards, game_id=game_id)
+    if request.method == "POST":
+        # TODO: check which button was pressed
+        # if continue, render play template
+        # if start new game, clear latest games and start new game
+        if request.form["submit_button"] == "Continue":
+            print("####button CONTINUE")
+            return render_template("play.html", set_id=set_id)
+        elif request.form["submit_button"] == "Start a new game":
+            print("####button NEW GAME")
+            return render_template("play.html", set_id=set_id)
+        else:
+            flash("Unknown submit value")
+            return redirect(request.url)
+
+
+
 
 @app.route("/play/<int:set_id>", methods=["GET", "POST"])
 def play(set_id):
@@ -200,15 +216,15 @@ def play(set_id):
 #            return redirect(request.url)
     return render_template("play.html", set_id=set_id)
 
-@app.route("/stop-play/<int:set_id>")
-def stop_play(set_id):
-    #TODO: if user stops playing by some other way, the latest game
-    # doesn't get cleared
-    current_user_id = users.current_user_id()
-    if current_user_id:
-        plays.clear_latest(current_user_id)
-
-    return redirect("/set/" + str(set_id))
+#@app.route("/stop-play/<int:set_id>")
+#def stop_play(set_id):
+#    #TODO: if user stops playing by some other way, the latest game
+#    # doesn't get cleared
+#    current_user_id = users.current_user_id()
+#    if current_user_id:
+#        plays.clear_latest(current_user_id)
+#
+#    return redirect("/set/" + str(set_id))
 
 @app.route("/edit-set/<int:id>", methods=["GET", "POST"])
 def edit_set(id):

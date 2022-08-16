@@ -9,7 +9,8 @@
     <br>
     <!-- <a href="/{{ session.user_id }}">Stop</a> -->
     {{ set_id }}
-    <a href="/stop-play/{{ set_id }}">Stop</a>
+    <!-- <a href="/stop-play/{{ set_id }}">Stop</a> -->
+    <a href="/set/{{ set_id }}">Stop</a>
 
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
