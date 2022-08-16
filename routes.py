@@ -188,7 +188,7 @@ def set(set_id):
             card = plays.get_random_card(game_id)
 
             answer_with = request.form["answer_with"]
-            if answer_with not in ("1", "2"):
+            if answer_with not in ("word1", "word2"):
                 flash("You must answer with either the term of definition")
                 return redirect(request.url)
 
@@ -200,7 +200,7 @@ def set(set_id):
             card = plays.get_random_card(new_game_id)
 
             answer_with = request.form["answer_with"]
-            if answer_with not in ("1", "2"):
+            if answer_with not in ("word1", "word2"):
                 flash("You must answer with either the term of definition")
                 return redirect(request.url)
 
@@ -227,7 +227,7 @@ def play(set_id):
         answer_with = request.form["answer_with"]
         print("####got response", response, "to card id", card_id, "in game", game_id, "answer with", answer_with)
 
-        plays.check_result(response, card_id, game_id)
+        result = plays.check_result(response, card_id, game_id, answer_with)
         next_card = plays.get_random_card(game_id)
         return render_template("play.html", set_id=set_id, game_id=game_id, card=next_card, answer_with=answer_with)
 

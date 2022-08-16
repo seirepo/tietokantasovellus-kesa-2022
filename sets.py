@@ -48,6 +48,11 @@ def get_cards(set_id):
     cards = db.session.execute(sql, {"set_id":set_id}).fetchall()
     return cards
 
+def get_card(id):
+    sql = """SELECT word1, word2 FROM cards WHERE id=:id"""
+    card = db.session.execute(sql, {"id":id}).fetchone()
+    return card
+
 def update_cards(cards):
     #TODO: update cards
     pass

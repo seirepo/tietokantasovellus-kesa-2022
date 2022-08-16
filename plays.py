@@ -49,5 +49,14 @@ def clear_latest(user_id, set_id):
     db.session.execute(sql, {"user_id":user_id, "set_id":set_id})
     db.session.commit()
 
-def check_result(response, card_id, game_id):
-    pass
+def check_result(response, card_id, game_id, answer_with):
+    card = sets.get_card(card_id)
+    if answer_with == "word1":
+        correct = card.word1
+    else:
+        correct = card.word2
+
+    if response.lower() == correct.lower():
+        print("####vastaus oli oikein!", response, "==", correct)
+    else:
+        print("####vastaus oli väärin:", response, "!=", correct)

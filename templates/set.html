@@ -8,9 +8,9 @@
 <form action="/set/{{ set.id }}" method="post">
     Answer with
     <br>
-    <input type="radio" name="answer_with" value=1> {{ set.term }}
+    <input type="radio" name="answer_with" value="word1"> {{ set.term }}
     <br>
-    <input type="radio" name="answer_with" value=2 checked> {{ set.definition }}
+    <input type="radio" name="answer_with" value="word2" checked> {{ set.definition }}
     <br>
     {% if game_id %}
         <input type="submit" name="submit_button" value="Continue">
