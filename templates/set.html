@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 {% block title %}Play{% endblock %}
 {% block content %}
-<h2>Set: {{ set.name }}</h2>
+<h2>Set: {{ set.name }}, {{ set.id }}</h2>
 {{ set.description }} <br><br>
+<a href="/play/{{ set.id }}">Start</a> <br><br>
 Cards: {{ card_count }} <br><br>
 Stats: TODO
-
+{% for card in cards %}
+    <p>{{ card.word1 }} - {{ card.word2 }}</p>
+{% endfor %}
 {% endblock %}

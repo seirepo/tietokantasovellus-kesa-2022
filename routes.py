@@ -5,6 +5,7 @@ from app import app
 from db import db
 import users
 import sets
+import plays
 
 @app.route("/")
 def index():
@@ -161,21 +162,46 @@ def remove():
 def set(id):
     set = sets.get_set_info(id)
     cards = sets.get_cards(id)
-    return render_template("set.html", set=set, card_count=len(cards))
+    #TODO: check if user has a non finished game on this set, if yes then
+    # add a continue button, if not, then just start new game button
+    # this should probably be a POST form
+    # TODO: start new game
+    return render_template("set.html", set=set, card_count=len(cards), cards=cards)
 
-@app.route("/play/<int:set_id>/<int:card_id>", methods=["GET", "POST"])
-def play(set_id, card_id):
-    cards = sets.get_cards(set_id)
-    #print("####cards:", cards)
-    #print("####url:", request.url)
-    if request.method == "GET":
-        return render_template("play.html")#, set_id=set_id, card=cards[0])
+@app.route("/play/<int:set_id>", methods=["GET", "POST"])
+def play(set_id):
+#    if request.method == "GET":
+#        game_id = plays.get_latest_game_id(users.current_user_id())
+#        print("####latest_game_id: ", game_id, "(", type(game_id), ")")
+#        if not game_id:
+#            print("####ei ollu vielä peliä")
+#            res = plays.setup_new_game(users.current_user_id(), set_id)
+#            if not res:
+#                print("####sth went wrong :-(")
+#                flash("####Something went wrong :-(")
+#                return redirect(request.url)
+#
+#        #TODO: get random card id from card_results which
+#        # has not yet been guessed and pass to play.html as a next word
+#        next_word = plays.get_random_card(game_id)
+#        return render_template("play.html", set_id=set_id)
+#
+#    if request.method == "POST":
+#        response = request.form["response"]
+#        if len(response.strip()) == 0:
+#            flash("Answer cannot be empty")
+#            return redirect(request.url)
+    return render_template("play.html", set_id=set_id)
 
-    if request.method == "POST":
-        response = request.form["response"]
-        if len(response.strip()) == 0:
-            flash("Answer cannot be empty")
-            return redirect(request.url)
+@app.route("/stop-play/<int:set_id>")
+def stop_play(set_id):
+    #TODO: if user stops playing by some other way, the latest game
+    # doesn't get cleared
+    current_user_id = users.current_user_id()
+    if current_user_id:
+        plays.clear_latest(current_user_id)
+
+    return redirect("/set/" + str(set_id))
 
 @app.route("/edit-set/<int:id>", methods=["GET", "POST"])
 def edit_set(id):
