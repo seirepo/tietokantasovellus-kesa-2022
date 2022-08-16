@@ -3,7 +3,15 @@
 {% block content %}
 <h2>Set: {{ set.name }}, {{ set.id }}</h2>
 {{ set.description }} <br><br>
-<a href="/play/{{ set.id }}">Start</a> <br><br>
+
+<form action="/set/{{ set.id }}" method="post">
+    {% if game_id %}
+        <input type="submit" value="Continue">
+    {% endif %}
+    <input type="submit" value="Start a new game">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+
 Cards: {{ card_count }} <br><br>
 Stats: TODO
 {% for card in cards %}

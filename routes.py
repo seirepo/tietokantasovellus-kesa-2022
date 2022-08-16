@@ -158,15 +158,22 @@ def remove():
 
         return redirect("/" + str(users.current_user_id()))
 
-@app.route("/set/<int:id>")
-def set(id):
-    set = sets.get_set_info(id)
-    cards = sets.get_cards(id)
+@app.route("/set/<int:set_id>", methods=["GET", "POST"])
+def set(set_id):
+    set = sets.get_set_info(set_id)
+    cards = sets.get_cards(set_id)
+
+    current_user_id = users.current_user_id()
+    if not current_user_id:
+        return render_template("set.html", set=set, card_count=len(cards), cards=cards)
+
     #TODO: check if user has a non finished game on this set, if yes then
-    # add a continue button, if not, then just start new game button
+    # add a continue button, if not, then just a start new game button
     # this should probably be a POST form
+    game_id = plays.get_latest_game_id(current_user_id, set_id)
+
     # TODO: start new game
-    return render_template("set.html", set=set, card_count=len(cards), cards=cards)
+    return render_template("set.html", set=set, card_count=len(cards), cards=cards, game_id=game_id)
 
 @app.route("/play/<int:set_id>", methods=["GET", "POST"])
 def play(set_id):
