@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Play{% endblock %}
+{% block content %}
+
+<form action="/play/{{ set_id }}" method="get">
+{{ word }} <br>
+{% if correct %}
+    <!-- <input type="text" value="{{ response }}"> was correct! -->
+    <input readonly value="{{ response }}" autofocus>
+    <input type="submit" value="Next">
+    <br>
+    Correct!
+{% else %}
+    <input readonly value="{{ response }}" autofocus>
+    <input type="submit" value="Next">
+    <br>
+    {{ response }} was not correct, correct answer was {{ correct_answer }}
+{% endif %}
+<br>
+<a href="/set/{{ set_id }}">Stop</a>
+</form>
+
+{% endblock %}

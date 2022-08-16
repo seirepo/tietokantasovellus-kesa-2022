@@ -10,13 +10,13 @@ def get_latest_game_id(user_id, set_id):
     else:
         return id
 
-def setup_new_game(user_id, set_id):
+def setup_new_game(user_id, set_id, answer_with):
     print("####set up new game", set_id, "for", user_id)
     clear_latest(user_id, set_id)
     print("####previous game cleared")
-    sql = """INSERT INTO latest_games (user_id, set_id)
-    VALUES (:user_id, :set_id) RETURNING id"""
-    game_id = db.session.execute(sql, {"user_id":user_id, "set_id":set_id}).fetchone()[0]
+    sql = """INSERT INTO latest_games (user_id, set_id, answer_with)
+    VALUES (:user_id, :set_id, :answer_with) RETURNING id"""
+    game_id = db.session.execute(sql, {"user_id":user_id, "set_id":set_id, "answer_with":answer_with}).fetchone()[0]
     db.session.commit()
     
     cards = sets.get_cards(set_id)
@@ -44,6 +44,11 @@ def get_random_card(latest_game_id):
     card = result.fetchone()
     return card
 
+def update_answer_with(game_id, answer_with):
+    sql = """UPDATE latest_games SET answer_with=:answer_with WHERE id=:game_id"""
+    db.session.execute(sql, {"answer_with":answer_with, "game_id":game_id})
+    db.session.commit()
+
 def clear_latest(user_id, set_id):
     sql = """DELETE FROM latest_games WHERE user_id=:user_id AND set_id=:set_id"""
     db.session.execute(sql, {"user_id":user_id, "set_id":set_id})
@@ -59,8 +64,16 @@ def check_result(response, card_id, game_id, answer_with):
     if response.lower() == correct.lower():
         sql = """UPDATE card_results SET result=1
                  WHERE latest_game_id=:latest_game_id AND card_id=:card_id"""
+        result = True
     else:
         sql = """UPDATE card_results SET times_guessed_wrong=times_guessed_wrong + 1
                  WHERE latest_game_id=:latest_game_id AND card_id=:card_id"""
+        result = False
     db.session.execute(sql, {"latest_game_id":game_id, "card_id":card_id})
     db.session.commit()
+    return result
+
+def get_answer_with(game_id):
+    sql = """SELECT answer_with FROM latest_games WHERE id=:game_id"""
+    result = db.session.execute(sql, {"game_id":game_id}).fetchone()
+    return result

@@ -167,12 +167,11 @@ def set(set_id):
     current_user_id = users.current_user_id()
     if request.method == "GET":
         set = sets.get_set_info(set_id)
-        print("####set info acquired:", set)
-        print("####especially term", set.term, "(",  "), definition", set.definition, "(", type(set.definition), ")")
         cards = sets.get_cards(set_id)
 
         if not current_user_id:
             return render_template("set.html", set=set, card_count=len(cards), cards=cards)
+
         game_id = plays.get_latest_game_id(current_user_id, set_id)
         return render_template("set.html", set=set, card_count=len(cards), cards=cards, game_id=game_id)
 
@@ -183,28 +182,26 @@ def set(set_id):
 
         #TODO: refactor the following
         if request.form["submit_button"] == "Continue":
-            game_id = request.form["game_id"]
-            print("####got game id", game_id)
-            card = plays.get_random_card(game_id)
-
             answer_with = request.form["answer_with"]
             if answer_with not in ("word1", "word2"):
                 flash("You must answer with either the term of definition")
                 return redirect(request.url)
 
-            print("####set post continue got answer with", answer_with)
+            game_id = request.form["game_id"]
+            plays.update_answer_with(game_id, answer_with)
+            card = plays.get_random_card(game_id)
+
             return render_template("play.html", set_id=set_id, game_id=game_id, card=card, answer_with=answer_with)
 
         elif request.form["submit_button"] == "Start a new game":
-            new_game_id = plays.setup_new_game(current_user_id, set_id)
-            card = plays.get_random_card(new_game_id)
-
             answer_with = request.form["answer_with"]
             if answer_with not in ("word1", "word2"):
                 flash("You must answer with either the term of definition")
                 return redirect(request.url)
 
-            print("####set post new game got answer with", answer_with)
+            new_game_id = plays.setup_new_game(current_user_id, set_id, answer_with)
+            card = plays.get_random_card(new_game_id)
+
             return render_template("play.html", set_id=set_id, game_id=new_game_id, card=card, answer_with=answer_with)
 
         else:
@@ -214,7 +211,26 @@ def set(set_id):
 @app.route("/play/<int:set_id>", methods=["GET", "POST"])
 def play(set_id):
     if request.method == "GET":
-        return redirect("/set/" + str(set_id))
+        current_user_id = users.current_user_id()
+        if not current_user_id:
+            flash("Log in to play")
+            return redirect("/login")
+
+        game_id = plays.get_latest_game_id(current_user_id, set_id)
+        if not game_id:
+            return redirect("/set/" + str(set_id))
+
+        #TODO: check if all cards are correctly guessed
+        next_card = plays.get_random_card(game_id)
+
+        if not next_card:
+            results = plays.get_card_results(game_id)
+            return render_template("finish.html", results=results)
+
+        answer_with = plays.get_answer_with(game_id)[0]
+        print("####answer with tulos:", answer_with)
+        return render_template("play.html", set_id=set_id, game_id=game_id, card=next_card, answer_with=answer_with)
+
     if request.method == "POST":
         current_user_id = users.current_user_id()
         if not current_user_id:
@@ -227,9 +243,17 @@ def play(set_id):
         answer_with = request.form["answer_with"]
         print("####got response", response, "to card id", card_id, "in game", game_id, "answer with", answer_with)
 
-        result = plays.check_result(response, card_id, game_id, answer_with)
-        next_card = plays.get_random_card(game_id)
-        return render_template("play.html", set_id=set_id, game_id=game_id, card=next_card, answer_with=answer_with)
+        correct = plays.check_result(response, card_id, game_id, answer_with)
+        card = sets.get_card(card_id)
+        if answer_with == "word1":
+            word_to_guess = card.word2
+            correct_answer = card.word1
+        else:
+            word_to_guess = card.word1
+            correct_answer = card.word2
+
+        print("####request.url before showing result:", request.url)
+        return render_template("card-result.html", set_id=set_id, word=word_to_guess, correct=correct, response=response, correct_answer=correct_answer)
 
 
 @app.route("/edit-set/<int:id>", methods=["GET", "POST"])
