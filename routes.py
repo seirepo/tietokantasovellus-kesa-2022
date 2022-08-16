@@ -228,7 +228,6 @@ def play(set_id):
             return render_template("finish.html", results=results)
 
         answer_with = plays.get_answer_with(game_id)[0]
-        print("####answer with tulos:", answer_with)
         return render_template("play.html", set_id=set_id, game_id=game_id, card=next_card, answer_with=answer_with)
 
     if request.method == "POST":
@@ -241,7 +240,6 @@ def play(set_id):
         card_id = request.form["card_id"]
         game_id = request.form["game_id"]
         answer_with = request.form["answer_with"]
-        print("####got response", response, "to card id", card_id, "in game", game_id, "answer with", answer_with)
 
         correct = plays.check_result(response, card_id, game_id, answer_with)
         card = sets.get_card(card_id)
@@ -252,7 +250,6 @@ def play(set_id):
             word_to_guess = card.word1
             correct_answer = card.word2
 
-        print("####request.url before showing result:", request.url)
         return render_template("card-result.html", set_id=set_id, word=word_to_guess, correct=correct, response=response, correct_answer=correct_answer)
 
 
@@ -276,8 +273,6 @@ def edit_set(id):
         card_ids = request.form.getlist("card id")
         remove_ids = request.form.getlist("remove card")
         cards = dict(zip(card_ids, zip(word1, word2)))
-        print("####cards:", cards)
-        print("####card ids to be removed:", remove_ids)
 
         for id in remove_ids:
             del cards[id]
