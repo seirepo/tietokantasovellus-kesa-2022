@@ -30,9 +30,8 @@ CREATE TABLE IF NOT EXISTS latest_games (
 );
 
 CREATE TABLE IF NOT EXISTS card_results (
-    id SERIAL PRIMARY KEY,
     latest_game_id INTEGER REFERENCES latest_games ON DELETE CASCADE,
     card_id INTEGER REFERENCES cards ON DELETE CASCADE,
-    correctly_guessed INT,
-    times_played INT
+    result INT DEFAULT 0,
+    times_guessed INT DEFAULT 0
 );
