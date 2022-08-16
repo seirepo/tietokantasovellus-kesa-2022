@@ -224,8 +224,8 @@ def play(set_id):
         if not next_card:
             results = plays.get_card_results_ordered(game_id)
             set_info = sets.get_set_info(set_id)
+            plays.delete_game(game_id)
             #TODO: update stats
-            #TODO: reset latest_games (remove finished game)
             return render_template("finish.html", results=results, card_count=len(results), set=set_info, game_id=game_id)
 
         answer_with = plays.get_answer_with(game_id)[0]

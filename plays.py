@@ -88,3 +88,8 @@ def get_card_results_ordered(game_id):
              ORDER BY results.times_guessed_wrong DESC, results.time_guessed DESC;"""
     results = db.session.execute(sql, {"game_id":game_id}).fetchall()
     return results
+
+def delete_game(game_id):
+    sql = """DELETE FROM latest_games WHERE id=:game_id"""
+    db.session.execute(sql, {"game_id":game_id})
+    db.session.commit()
