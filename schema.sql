@@ -33,5 +33,5 @@ CREATE TABLE IF NOT EXISTS card_results (
     latest_game_id INTEGER REFERENCES latest_games ON DELETE CASCADE,
     card_id INTEGER REFERENCES cards ON DELETE CASCADE,
     result INT DEFAULT 0,
-    times_guessed INT DEFAULT 0
+    times_guessed_wrong INT DEFAULT 0
 );
