@@ -124,11 +124,15 @@ def add_new_set():
         if len(term) > 100:
             flash("Term too long: " + len(term) + " > 100")
             return redirect("/add-new-set")
+        if len(term) == 0:
+            term = "term"
 
         definition = request.form["definition"]
         if len(definition) > 100:
             flash("Definition too long: " + len(term) + " > 100")
             return redirect("/add-new-set")
+        if len(definition) == 0:
+            definition = "definition"
 
         private = request.form["private"]
         if private not in ("0", "1"):
