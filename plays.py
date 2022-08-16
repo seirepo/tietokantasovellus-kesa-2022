@@ -57,6 +57,10 @@ def check_result(response, card_id, game_id, answer_with):
         correct = card.word2
 
     if response.lower() == correct.lower():
-        print("####vastaus oli oikein!", response, "==", correct)
+        sql = """UPDATE card_results SET result=1
+                 WHERE latest_game_id=:latest_game_id AND card_id=:card_id"""
     else:
-        print("####vastaus oli väärin:", response, "!=", correct)
+        sql = """UPDATE card_results SET times_guessed_wrong=times_guessed_wrong + 1
+                 WHERE latest_game_id=:latest_game_id AND card_id=:card_id"""
+    db.session.execute(sql, {"latest_game_id":game_id, "card_id":card_id})
+    db.session.commit()
