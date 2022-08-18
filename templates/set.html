@@ -4,7 +4,7 @@
 <h1>{{ set.name }}, {{ set.id }}</h1>
 <p>{{ set.description }}</p>
 
-<h3>Play set</h3>
+<h2>Play set</h2>
 <form action="/set/{{ set.id }}" method="post">
     Answer with
     <br>
@@ -20,10 +20,10 @@
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
-<h3>Stats</h3>
+<h2>Stats</h2>
 TODO
 
-<h3>Cards ({{ card_count }})</h3>
+<h2>Cards ({{ card_count }})</h2>
 {% for card in cards %}
     <p>{{ card.word1 }} - {{ card.word2 }}</p>
 {% endfor %}
