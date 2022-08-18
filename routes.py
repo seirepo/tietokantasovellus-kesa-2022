@@ -265,6 +265,7 @@ def edit_set(set_id):
             return redirect("/login")
 
     if request.method == "POST":
+        #TODO: check that current user is the owner of this set
 
         name = request.form["name"]
         description = request.form["description"]
@@ -284,16 +285,17 @@ def edit_set(set_id):
         word2 = request.form.getlist("word2")
         card_ids = request.form.getlist("card id")
         remove_ids = request.form.getlist("remove card")
-        cards = dict(zip(card_ids, zip(word1, word2)))
+        cards_to_update = dict(zip(card_ids, zip(word1, word2)))
 
         for card_id in remove_ids:
-            del cards[card_id]
+            del cards_to_update[card_id]
 
-        if len(cards) == 0:
+        if len(cards_to_update) == 0:
             flash("You can't remove all cards")
             return redirect(request.url)
 
-        sets.update_cards(cards)
+        #sets.update_cards(cards)
+        sets.update_set(set_id, name, description, term, definition, private, cards_to_update)
         word_pairs = sets.parse_words(words)
         sets.add_cards_to_set(set_id, word_pairs)
         sets.remove_cards(remove_ids)

@@ -47,9 +47,25 @@ def get_card(id):
     card = db.session.execute(sql, {"id":id}).fetchone()
     return card
 
-def update_cards(cards):
-    #TODO: update cards
-    pass
+def update_set(set_id, name, description, term, definition, private, cards_to_update):
+    #TODO: update set
+    sql = """UPDATE sets
+             SET name=:name, description=:description, term=:term,
+                 definition=:definition, private=:private
+             WHERE id=:set_id"""
+    db.session.execute(sql,
+            {"name":name, "description":description, "term":term, "definition":definition,
+            "private":private, "set_id":set_id})
+    db.session.commit()
+
+    for card_id in cards_to_update:
+        word1 = cards_to_update[card_id][0]
+        word2 = cards_to_update[card_id][1]
+        sql = """UPDATE cards
+                 SET word1=:word1, word2=:word2
+                 WHERE id=:card_id"""
+        db.session.execute(sql, {"word1":word1, "word2":word2, "card_id":card_id})
+    db.session.commit()
 
 def remove_cards(ids):
     for id in ids:
