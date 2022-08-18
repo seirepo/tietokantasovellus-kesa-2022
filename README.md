@@ -12,36 +12,37 @@ Sovelluksella voi harjoitella esimerkiksi vieraan kielen sanoja. Sovellusta voi 
 - [x] sovellukseen voi luoda uuden käyttäjän
 - [x] sovellukseen voi kirjautua olemassaolevana käyttäjänä
 
-Normaali käyttäjä voi
+Käyttäjä voi
 - [x] luoda oman sanakokoelman
-- [ ] lisätä olemassaoleviin sanakokoelmiin uusia sanoja
+- [x] lisätä olemassaoleviin sanakokoelmiin uusia sanoja
 - [x] poistaa kokoelmasta sanoja
-- [ ] harjoitella sanakokoelmia
-- [ ] muokata kokoelman sanoja
+- [x] harjoitella sanakokoelmia
+- [x] muokata kokoelman sanoja
 - [x] poistaa kokoelman
 
-Tähtikäyttäjä voi
-- [ ] tehdä kaiken mitä opiskelijakin
-- [ ] luoda ryhmän opiskelijoille
-- [ ] jakaa ryhmälle yhden tai useamman sanakokoelman harjoiteltavaksi
-- [ ] seurata opiskelijakohtaisia tilastoja ryhmässä
-
-Kirjautumaton käyttäjä voi selata ja harjoitella sanakokoelmia.
+Kirjautumaton käyttäjä voi selata käyttäjiä ja sanakokoelmia, mutta ei harjoitella niitä.
 
 ## Sanakokoelmat
 Sanakokoelmista näkyvät tiedot:
 - [x] nimi (pakollinen)
 - [ ] sanojen määrä
 - [ ] kokoelman luonut käyttäjä
-- [ ] käyttäjän kirjoittama kuvaus (vapaaehtoinen)
+- [x] käyttäjän kirjoittama kuvaus (vapaaehtoinen)
+
+Sanakokoelma voi olla julkinen tai yksityinen.
 
 ## Sanojen harjoittelu
-- [ ] harjoittelutilassa käyttäjä saa kokoelmasta satunnaisia sanoja käännettäväksi
-- [ ] käyttäjä kirjoittaa saamalleen sanalle käännöksen ja saa palautteen, meneekö se oikein
-- [ ] harjoittelu päättyy kun kaikki sanat on käyty läpi (tai jos käyttäjä haluaa keskeyttää harjoittelun)
-- [ ] harjoittelun tai sen keskeyttämisen jälkeen käyttäjä saa näkyviin tilastoja kuinka moni sanoista meni oikein, ja harjoitellut sanat listattuna luokiteltuna oikein ja väärin käännetyiksi
+- [x] harjoittelutilassa käyttäjä saa kokoelmasta satunnaisia sanoja käännettäväksi
+- [x] käyttäjä kirjoittaa saamalleen sanalle käännöksen ja saa palautteen, meneekö se oikein
+- [x] harjoittelu päättyy kun kaikki sanat on käyty läpi (tai jos käyttäjä haluaa keskeyttää harjoittelun)
+- [x] harjoittelun jälkeen käyttäjä saa näkyviin sanat ja tiedon siitä kuinka monella arvauksella sanan sai oikein
 - [ ] käyttäjä näkee jokaisen oman kokoelman kohdalla kuinka monta kertaa on harjoitellut sitä
 
 ## Jos aikaa jää:
-- [ ] yksityiset ja julkiset kokoelmat
-- [ ] mahdollisuus tallentaa kokoelmia tai tykätä niistä
+- mahdollisuus tallentaa kokoelmia tai tykätä niistä
+
+- normaalikäyttäjän lisäksi tähtikäyttäjä, joka voi
+    - tehdä kaiken mitä normaalikäyttäjäkin
+    - luoda ryhmän normaalikäyttäjille
+    - jakaa ryhmälle yhden tai useamman sanakokoelman harjoiteltavaksi
+    - seurata käyttäjäkohtaisia tilastoja ryhmässä
