@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS latest_games (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users ON DELETE CASCADE,
     set_id INTEGER REFERENCES sets ON DELETE CASCADE,
-    answer_with TEXT NOT NULL
+    answer_with TEXT NOT NULL,
+    UNIQUE (user_id, set_id)
 );
 
 CREATE TABLE IF NOT EXISTS card_results (
