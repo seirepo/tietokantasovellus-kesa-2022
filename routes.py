@@ -265,7 +265,8 @@ def edit_set(set_id):
             return redirect("/login")
 
     if request.method == "POST":
-        #TODO: check that current user is the owner of this set
+        if users.current_user_id() != sets.get_set_creator_id(set_id):
+            return render_template("error.html")
 
         name = request.form["name"]
         description = request.form["description"]

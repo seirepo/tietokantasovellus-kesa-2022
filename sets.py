@@ -131,3 +131,9 @@ def add_cards_to_set(set_id, cards):
                  VALUES (:set_id, :word1, :word2)"""
         db.session.execute(sql, {"set_id":set_id, "word1":pair[0], "word2":pair[1]})
     db.session.commit()
+
+def get_set_creator_id(set_id):
+    sql = """SELECT creator_id FROM sets WHERE id=:set_id"""
+    creator_id = db.session.execute(sql, {"set_id":set_id}).fetchone()
+    if creator_id:
+        return creator_id[0]
