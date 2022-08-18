@@ -6,9 +6,21 @@
 <p>{{ set.description }}</p>
 
 <h2>Cards ({{ card_count }})</h2>
+
+<table>
+    <tr>
+        <th>{{ set.term }}</th>
+        <th>{{ set.definition }}</th>
+        <th>times guessed wrong</th>
+    </tr>
 {% for card in results %}
-    <p>{{ card.word1 }} - {{ card.word2 }}, {{ card.times_guessed_wrong }}</p>
+    <tr>
+        <td>{{ card.word1 }}</td>
+        <td>{{ card.word2 }}</td>
+        <td>{{ card.times_guessed_wrong }}</td>
+    </tr>
 {% endfor %}
+</table>
 
 <a href="/set/{{ set.id }}">Back to set</a>
 {% endblock %}
