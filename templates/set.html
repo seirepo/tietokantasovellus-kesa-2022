@@ -24,7 +24,18 @@
 TODO
 
 <h2>Cards ({{ card_count }})</h2>
+<table>
+    <tr>
+        <th>{{ set.term }}</th>
+        <th>{{ set.definition }}</th>
+    </tr>
 {% for card in cards %}
-    <p>{{ card.word1 }} - {{ card.word2 }}</p>
+    <tr>
+        <td>{{ card.word1 }}</td>
+        <td>{{ card.word2 }}</td>
+    </tr>
+    <!-- <p>{{ card.word1 }} - {{ card.word2 }}</p> -->
 {% endfor %}
+</table>
+
 {% endblock %}
