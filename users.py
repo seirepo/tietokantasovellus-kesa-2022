@@ -54,3 +54,8 @@ def current_user():
 
 def current_user_id():
     return session.get("user_id", 0)
+
+def get_all_users():
+    result = db.session.execute("SELECT id, username, role FROM users")
+    users = result.fetchall()
+    return users

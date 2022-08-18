@@ -22,9 +22,9 @@ def get_sets(creator_id, show_all, sort_by):
         order_by = "ORDER BY name ASC"
 
     if show_all:
-        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id AND private=0 """ + order_by
+        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id """ + order_by
     else:
-        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id :order_by """ + order_by
+        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id AND private=0 """ + order_by
     result = db.session.execute(sql, {"creator_id":creator_id})
     sets = result.fetchall()
     return sets
@@ -36,7 +36,6 @@ def remove_sets(set_ids):
             db.session.execute(sql, {"id":set_id})
             db.session.commit()
         except:
-            print("####Removing set ", set_id, " failed!")
             return False
 
 def get_set_info(set_id):
@@ -82,7 +81,7 @@ def remove_cards(ids):
             db.session.execute(sql, {"id":id})
             db.session.commit()
         except:
-            print("####Removing card with id", id, "failed")
+            return False
 
 def validate_new_set_info(name, description, words, term, definition, private):
     result = validate_set_info(name, description, words, term, definition, private)
@@ -127,13 +126,6 @@ def validate_set_info(name, description, words, term, definition, private):
         return {"success":False, "msg":", ".join(msg)}
     else:
         return {"success":True, "msg":""}
-
-def default_if_empty(term, definition):
-    if len(term) == 0:
-        term = "term"
-
-    if len(definition) == 0:
-        definition = "definition"
 
 def parse_words(words):
     word_pairs = []

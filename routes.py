@@ -9,9 +9,8 @@ import plays
 
 @app.route("/")
 def index():
-    result = db.session.execute("SELECT username, role FROM users")
-    users = result.fetchall()
-    return render_template("index.html", count=len(users), users=users)
+    users_info = users.get_all_users()
+    return render_template("index.html", count=len(users_info), users=users_info)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -80,9 +79,9 @@ def result():
 
 @app.route("/<int:id>")
 def show_user(id):
-    print("####args:",request.args)
     username = users.get_username(id)
-    show_all = int(id == session["user_id"])
+
+    show_all = int(id == users.current_user_id())
     sort_by = request.args.get("sort_by")
     user_sets = sets.get_sets(id, show_all, sort_by)
     return render_template("user.html", count=len(user_sets), username=username, sets=user_sets, creator=id)
@@ -111,7 +110,11 @@ def add_new_set():
             flash(result["msg"])
             return redirect(request.url)
 
-        sets.default_if_empty(term, definition)
+        if len(term) == 0:
+            term = "term"
+
+        if len(definition) == 0:
+            definition = "definition"
 
         creator_id = users.current_user_id()
         sets.add_new_set(name, description, words, term, definition, private, creator_id)
@@ -122,7 +125,7 @@ def add_new_set():
 def remove():
     if request.method == "GET":
         if users.current_user():
-            user_sets = sets.get_sets(users.current_user_id(), 0)
+            user_sets = sets.get_sets(users.current_user_id(), 1, "name")
             return render_template("remove-sets.html", sets=user_sets)
         else:
             flash("Log in to create and remove sets")
@@ -253,7 +256,11 @@ def edit_set(set_id):
             flash(result["msg"])
             return redirect(request.url)
 
-        sets.default_if_empty(term, definition)
+        if len(term) == 0:
+            term = "term"
+
+        if len(definition) == 0:
+            definition = "definition"
 
         word1 = request.form.getlist("word1")
         word2 = request.form.getlist("word2")

@@ -31,11 +31,11 @@
     <input type="text" name="definition" placeholder="definition" maxlength="100" value="{{ set.definition }}"></p>
 
     {% if set.private == 1 %}
-        <input type="radio" name="private" value=0 checked> Public
-        <input type="radio" name="private" value=1> Private
-    {% else %}
         <input type="radio" name="private" value=0> Public
         <input type="radio" name="private" value=1 checked> Private
+    {% else %}
+        <input type="radio" name="private" value=0 checked> Public
+        <input type="radio" name="private" value=1> Private
     {% endif %}
     <p>
 
