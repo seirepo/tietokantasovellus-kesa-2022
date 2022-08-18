@@ -48,6 +48,11 @@ def get_cards(set_id):
     cards = db.session.execute(sql, {"set_id":set_id}).fetchall()
     return cards
 
+def get_card(id):
+    sql = """SELECT word1, word2 FROM cards WHERE id=:id"""
+    card = db.session.execute(sql, {"id":id}).fetchone()
+    return card
+
 def update_cards(cards):
     #TODO: update cards
     pass
@@ -61,3 +66,9 @@ def remove_cards(ids):
             db.session.commit()
         except:
             print("####Removing card with id", id, "failed")
+
+def get_random_card_id(set_id, exclude_ids):
+    sql = """SELECT id, word1, word2 FROM cards WHERE set_id=:set_id
+             AND id NOT IN (:values) ORDER BY random()"""
+    result = db.session.execute(sql, {"set_id":set_id, "values":exclude_ids}).fetchall()
+    return result

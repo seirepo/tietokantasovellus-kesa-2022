@@ -1,5 +1,24 @@
 {% extends "layout.html" %}
-{% block title %}play{% endblock %}
+{% block title %}Play{% endblock %}
 {% block content %}
-TODO: play
+
+<form action="/play/{{ set_id }}" method="post">
+    {% if answer_with == "word2" %}
+        {{ card.word1 }}
+    {% elif answer_with == "word1" %}
+        {{ card.word2 }}
+    {% endif %}
+    <br>
+    <input type="text" name="response" autofocus>
+    <input type="hidden" name="game_id" value="{{ game_id }}">
+    <input type="hidden" name="card_id" value="{{ card.id }}">
+    <input type="hidden" name="answer_with" value="{{ answer_with }}">
+    <input type="submit" value="OK">
+    <br>
+
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <a href="/set/{{ set_id }}">Stop</a>
+
+</form>
+
 {% endblock %}

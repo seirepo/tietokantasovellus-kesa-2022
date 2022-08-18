@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}Play{% endblock %}
+{% block content %}
+<h1>{{ set.name }}, {{ set.id }}</h1>
+<p>{{ set.description }}</p>
+
+<h2>Play set</h2>
+<form action="/set/{{ set.id }}" method="post">
+    Answer with
+    <br>
+    <input type="radio" name="answer_with" value="word1"> {{ set.term }}
+    <br>
+    <input type="radio" name="answer_with" value="word2" checked> {{ set.definition }}
+    <br>
+    {% if game_id %}
+        <input type="submit" name="submit_button" value="Continue">
+        <input type="hidden" name="game_id" value="{{ game_id }}">
+    {% endif %}
+    <input type="submit" name="submit_button" value="Start a new game">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+
+<h2>Stats</h2>
+TODO
+
+<h2>Cards ({{ card_count }})</h2>
+{% for card in cards %}
+    <p>{{ card.word1 }} - {{ card.word2 }}</p>
+{% endfor %}
+{% endblock %}

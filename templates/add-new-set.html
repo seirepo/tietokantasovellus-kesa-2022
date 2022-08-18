@@ -6,7 +6,7 @@
 <form action="/add-new-set" method="post">
 
     <p>Name:
-    <input type="text" name="name" minlength="1" maxlength="20"></p>
+    <input type="text" name="name" minlength="1" maxlength="100"></p>
     <p>Description:
     <input type="text" name="description" maxlength="100"></p>
 
@@ -14,9 +14,9 @@
     <textarea name="words" placeholder="Ex. cat;kissa" rows="8" cols="40" maxlength="10000"></textarea></p>
 
     <p>Term (optional):
-    <input type="text" name="term" placeholder="term" maxlength="20"></p>
+    <input type="text" name="term" placeholder="term" maxlength="100"></p>
     <p>Definition (optional):
-    <input type="text" name="definition" placeholder="definition" maxlength="20"></p>
+    <input type="text" name="definition" placeholder="definition" maxlength="100"></p>
 
     <input type="radio" name="private" value=0 checked> Public
     <input type="radio" name="private" value=1> Private
