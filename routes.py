@@ -30,7 +30,6 @@ def login():
                 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    #TODO: refactor function
     if request.method == "GET":
         return render_template("register.html")
     if request.method == "POST":
@@ -64,8 +63,7 @@ def register():
             flash("Welcome " + username)
             return redirect("/")
         else:
-            #TODO: return error page
-            print("####something went wrong :-(")
+            return render_template("error.html")
     
 @app.route("/logout")
 def logout():
@@ -127,7 +125,7 @@ def remove():
             user_sets = sets.get_sets(users.current_user_id(), 0)
             return render_template("remove-sets.html", sets=user_sets)
         else:
-            #TODO: add an error message "log in to create and remove sets" or sth
+            flash("Log in to create and remove sets")
             return redirect("/login")
 
     if request.method == "POST":
@@ -156,7 +154,6 @@ def set(set_id):
             flash("Log in to play")
             return redirect("/login")
 
-        #TODO: refactor the following
         if request.form["submit_button"] == "Continue":
             answer_with = request.form["answer_with"]
             if answer_with not in ("word1", "word2"):
@@ -271,7 +268,6 @@ def edit_set(set_id):
             flash("You can't remove all cards")
             return redirect(request.url)
 
-        #sets.update_cards(cards)
         sets.update_set(set_id, name, description, term, definition, private, cards_to_update)
         word_pairs = sets.parse_words(words)
         sets.add_cards_to_set(set_id, word_pairs)
