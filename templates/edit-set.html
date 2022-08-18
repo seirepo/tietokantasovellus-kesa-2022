@@ -5,7 +5,7 @@
 
 <form action="/edit-set/{{ set_id }}" method="post">
     <p>Name:
-    <input type="text" name="name" minlength="1" maxlength="20" value="{{ set.name }}"></p>
+    <input type="text" name="name" minlength="1" maxlength="100" value="{{ set.name }}"></p>
     <p>Description:
     <input type="text" name="description" maxlength="100" value="{{ set.description }}"></p>
 
@@ -26,9 +26,9 @@
     <textarea name="words" placeholder="Ex. cat;kissa" rows="8" cols="40" maxlength="10000"></textarea></p>
 
     <p>Term:
-    <input type="text" name="term" placeholder="term" maxlength="20" value="{{ set.term }}"></p>
+    <input type="text" name="term" placeholder="term" maxlength="100" value="{{ set.term }}"></p>
     <p>Definition:
-    <input type="text" name="definition" placeholder="definition" maxlength="20" value="{{ set.definition }}"></p>
+    <input type="text" name="definition" placeholder="definition" maxlength="100" value="{{ set.definition }}"></p>
 
     {% if set.private == 1 %}
         <input type="radio" name="private" value=0 checked> Public
