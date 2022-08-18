@@ -5,12 +5,22 @@
     {% if count == 0 %}
     No sets :-(
     {% else %}
+    <form>
+        sort by
+        <select name="sort_by">
+            <option value="name" selected="selected">Name</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+        </select>
+        <input type="submit" value="Sort">
+    </form>
+
         {% for set in sets %}
             <b>{{ set.name }}</b>
             <br>
             {{set.description }}
             <br>
-            <a href="/set/{{ set.id }}">Play</a>
+            <a href="/set/{{ set.id }}">Select</a>
             {% if creator == session.user_id %}
             <a href="/edit-set/{{ set.id }}">Edit</a>
             {% endif %}

@@ -80,11 +80,11 @@ def result():
 
 @app.route("/<int:id>")
 def show_user(id):
+    print("####args:",request.args)
     username = users.get_username(id)
-    if id == session["user_id"]:
-        user_sets = sets.get_sets(id, 0)
-    else:
-        user_sets = sets.get_sets(id, 1)
+    show_all = int(id == session["user_id"])
+    sort_by = request.args.get("sort_by")
+    user_sets = sets.get_sets(id, show_all, sort_by)
     return render_template("user.html", count=len(user_sets), username=username, sets=user_sets, creator=id)
 
 @app.route("/add-new-set", methods=["GET", "POST"])

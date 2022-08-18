@@ -11,11 +11,20 @@ def add_new_set(name, description, words, term, definition, private, creator_id)
     word_pairs = parse_words(words)
     add_cards_to_set(set_id, word_pairs)
 
-def get_sets(creator_id, only_public):
-    if only_public:
-        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id AND private=0"""
+def get_sets(creator_id, show_all, sort_by):
+    if sort_by == "name":
+        order_by = "ORDER BY name ASC"
+    elif sort_by == "newest":
+        order_by = "ORDER BY creation_time DESC"
+    elif sort_by == "oldest":
+        order_by = "ORDER BY creation_time ASC"
     else:
-        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id"""
+        order_by = "ORDER BY name ASC"
+
+    if show_all:
+        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id AND private=0 """ + order_by
+    else:
+        sql = """SELECT id, name, description FROM sets WHERE creator_id=:creator_id :order_by """ + order_by
     result = db.session.execute(sql, {"creator_id":creator_id})
     sets = result.fetchall()
     return sets
