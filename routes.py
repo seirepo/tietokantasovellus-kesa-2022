@@ -91,7 +91,6 @@ def show_user(id):
 
 @app.route("/add-new-set", methods=["GET", "POST"])
 def add_new_set():
-    #TODO: refactor function
     if request.method == "GET":
         if users.current_user():
             return render_template("add-new-set.html")
