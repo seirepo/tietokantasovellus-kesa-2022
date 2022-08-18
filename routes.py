@@ -253,32 +253,50 @@ def play(set_id):
 
         return render_template("card-result.html", set_id=set_id, word=word_to_guess, correct=correct, response=response, correct_answer=correct_answer)
 
-@app.route("/edit-set/<int:id>", methods=["GET", "POST"])
-def edit_set(id):
-    #TODO: finish implementation
+@app.route("/edit-set/<int:set_id>", methods=["GET", "POST"])
+def edit_set(set_id):
     if request.method == "GET":
         if users.current_user():
-            #TODO: render edit-set.html
-            set = sets.get_set_info(id)
-            cards = sets.get_cards(id)
-            return render_template("edit-set.html", set=set, cards=cards, set_id=id)
+            set = sets.get_set_info(set_id)
+            cards = sets.get_cards(set_id)
+            return render_template("edit-set.html", set=set, cards=cards, set_id=set_id)
         else:
-            #TODO: add an error message "log in to create and remove sets" or sth
+            flash("Log in to create sets")
             return redirect("/login")
 
     if request.method == "POST":
-        #TODO: implement edit
+
+        name = request.form["name"]
+        description = request.form["description"]
+        words = request.form["words"]
+        term = request.form["term"]
+        definition = request.form["definition"]
+        private = request.form["private"]
+        
+        result = sets.validate_set_info(name, description, words, term, definition, private)
+        if not result["success"]:
+            flash(result["msg"])
+            return redirect(request.url)
+
+        sets.default_if_empty(term, definition)
+
         word1 = request.form.getlist("word1")
         word2 = request.form.getlist("word2")
         card_ids = request.form.getlist("card id")
         remove_ids = request.form.getlist("remove card")
         cards = dict(zip(card_ids, zip(word1, word2)))
 
-        for id in remove_ids:
-            del cards[id]
+        for card_id in remove_ids:
+            del cards[card_id]
 
-        #TODO: check that user can't remove all words from set
+        if len(cards) == 0:
+            flash("You can't remove all cards")
+            return redirect(request.url)
 
         sets.update_cards(cards)
+        word_pairs = sets.parse_words(words)
+        sets.add_cards_to_set(set_id, word_pairs)
         sets.remove_cards(remove_ids)
+        plays.clear_games_by_set(set_id)
+
     return redirect("/" + str(users.current_user_id()))

@@ -93,3 +93,8 @@ def delete_game(game_id):
     sql = """DELETE FROM latest_games WHERE id=:game_id"""
     db.session.execute(sql, {"game_id":game_id})
     db.session.commit()
+
+def clear_games_by_set(set_id):
+    sql = """DELETE FROM latest_games WHERE set_id=:set_id"""
+    db.session.execute(sql, {"set_id":set_id})
+    db.session.commit()

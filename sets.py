@@ -8,14 +8,8 @@ def add_new_set(name, description, words, term, definition, private, creator_id)
              {"creator_id":creator_id, "name":name, "description":description,
              "term":term, "definition":definition, "private":private}).fetchone()[0]
 
-    for row in words.split("\n"):
-        pair = row.strip().split(";")
-        if len(pair) != 2:
-            continue
-        sql = """INSERT INTO cards (set_id, word1, word2)
-                 VALUES (:set_id, :word1, :word2)"""
-        db.session.execute(sql, {"set_id":set_id, "word1":pair[0], "word2":pair[1]})
-    db.session.commit()
+    word_pairs = parse_words(words)
+    add_cards_to_set(set_id, word_pairs)
 
 def get_sets(creator_id, only_public):
     if only_public:
@@ -65,3 +59,59 @@ def remove_cards(ids):
             db.session.commit()
         except:
             print("####Removing card with id", id, "failed")
+
+def validate_set_info(name, description, words, term, definition, private):
+    success = True
+    msg = ""
+
+    if len(name) < 1 or len(name) > 100:
+        msg += "Name length must be between 1-100\n"
+        success = False
+
+    if len(description) > 100:
+        msg += "Description too long: " + len(description) + "> 100\n"
+        success = False
+
+    if len(words) > 10000:
+        msg +=  "Word list too long: " + len(words) + " > 10000\n"
+        success = False
+
+    if len(term) > 100:
+        msg +=  "Term too long: " + len(term) + " > 100\n"
+        success = False
+
+    if len(definition) > 100:
+        msg +=  "Definition too long: " + len(term) + " > 100\n"
+        success = False
+
+    if private not in ("0", "1"):
+        msg +=  "Unsupported visibility selection\n"
+        success = False
+
+    if not success:
+        return {"success":False, "msg":msg}
+    else:
+        return {"success":True, "msg":""}
+
+def default_if_empty(term, definition):
+    if len(term) == 0:
+        term = "term"
+
+    if len(definition) == 0:
+        definition = "definition"
+
+def parse_words(words):
+    word_pairs = []
+    for row in words.split("\n"):
+        pair = row.strip().split(";")
+        if len(pair) != 2:
+            continue
+        word_pairs.append((pair[0], pair[1]))
+    return word_pairs
+
+def add_cards_to_set(set_id, cards):
+    for pair in cards:
+        sql = """INSERT INTO cards (set_id, word1, word2)
+                 VALUES (:set_id, :word1, :word2)"""
+        db.session.execute(sql, {"set_id":set_id, "word1":pair[0], "word2":pair[1]})
+    db.session.commit()
