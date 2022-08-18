@@ -48,7 +48,6 @@ def get_card(id):
     return card
 
 def update_set(set_id, name, description, term, definition, private, cards_to_update):
-    #TODO: update set
     sql = """UPDATE sets
              SET name=:name, description=:description, term=:term,
                  definition=:definition, private=:private
@@ -76,36 +75,47 @@ def remove_cards(ids):
         except:
             print("####Removing card with id", id, "failed")
 
+def validate_new_set_info(name, description, words, term, definition, private):
+    result = validate_set_info(name, description, words, term, definition, private)
+
+    if len(words) == 0 or len(parse_words(words)) == 0:
+        if not result["success"]:
+            result["msg"] += ", "
+        result["msg"] += "Set must contain at least 1 word pair"
+        result["success"] = False
+
+    return result
+
 def validate_set_info(name, description, words, term, definition, private):
     success = True
-    msg = ""
+    msg = []
 
     if len(name) < 1 or len(name) > 100:
-        msg += "Name length must be between 1-100\n"
+        msg.append("Name length must be between 1-100")
         success = False
 
     if len(description) > 100:
-        msg += "Description too long: " + len(description) + "> 100\n"
+        msg.append("Description too long: " + len(description) + "> 100")
         success = False
 
     if len(words) > 10000:
-        msg +=  "Word list too long: " + len(words) + " > 10000\n"
+        msg.append("Word list too long: " + len(words) + " > 10000")
         success = False
 
     if len(term) > 100:
-        msg +=  "Term too long: " + len(term) + " > 100\n"
+        msg.append("Term too long: " + len(term) + " > 100")
         success = False
 
     if len(definition) > 100:
-        msg +=  "Definition too long: " + len(term) + " > 100\n"
+        msg.append("Definition too long: " + len(term) + " > 100")
         success = False
 
     if private not in ("0", "1"):
-        msg +=  "Unsupported visibility selection\n"
+        msg.append("Unsupported visibility selection")
         success = False
 
     if not success:
-        return {"success":False, "msg":msg}
+        return {"success":False, "msg":", ".join(msg)}
     else:
         return {"success":True, "msg":""}
 

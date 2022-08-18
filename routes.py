@@ -96,48 +96,25 @@ def add_new_set():
         if users.current_user():
             return render_template("add-new-set.html")
         else:
-            #TODO: add an error message "log in to create a new set" or sth
+            flash("Log in to create a new set")
             return redirect("/login")
     if request.method == "POST":
-        #TODO: move check to separate function
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
-        
-        #TODO: make sure that empty set cannot be saved
-        #TODO: move validation to a separate method
+
         name = request.form["name"]
-        if len(name) < 1 or len(name) > 100:
-            flash("Name length must be between 1-100")
-            return redirect("/add-new-set")
-
         description = request.form["description"]
-        if len(description) > 100:
-            flash("Description too long: " + len(description) + "> 100")
-            return redirect("/add-new-set")
-
         words = request.form["words"]
-        if len(words) > 10000:
-            flash("Word list too long: " + len(words) + " > 10000")
-            return redirect("/add-new-set")
-
         term = request.form["term"]
-        if len(term) > 100:
-            flash("Term too long: " + len(term) + " > 100")
-            return redirect("/add-new-set")
-        if len(term) == 0:
-            term = "term"
-
         definition = request.form["definition"]
-        if len(definition) > 100:
-            flash("Definition too long: " + len(term) + " > 100")
-            return redirect("/add-new-set")
-        if len(definition) == 0:
-            definition = "definition"
-
         private = request.form["private"]
-        if private not in ("0", "1"):
-            flash("Unsupported visibility selection")
-            return redirect("/add-new-set")
+
+        result = sets.validate_new_set_info(name, description, words, term, definition, private)
+        if not result["success"]:
+            flash(result["msg"])
+            return redirect(request.url)
+
+        sets.default_if_empty(term, definition)
 
         creator_id = users.current_user_id()
         sets.add_new_set(name, description, words, term, definition, private, creator_id)
