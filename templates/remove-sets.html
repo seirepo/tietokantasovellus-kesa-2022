@@ -2,18 +2,33 @@
 {% block title %}Remove sets{% endblock %}
 {% block content %}
 
-<form action="/remove-sets" method="POST">
-    <h3>Select sets to be removed:</h3>
-    {% for set in sets %}
-            <b>{{ set.name }}</b>
-            <br>
-            {{ set.description }}
-            <input type="checkbox" name="selection" value="{{ set.id }}">
-            <br><br>
-    {% endfor %}
-    <br><br>
-    <input type="submit" value="Remove">
-    <a href="/{{ session.user_id }}">Cancel</a>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
+
+<div class="container">
+    <div class="row">
+        <p class="h3">Select sets to be removed:</p>
+        <div class="col-8">
+            <form action="/remove-sets" method="POST">
+
+                {% for set in sets %}
+
+                    <div class="input-group">
+                        <div class="list-group">
+                            <li class="list-group-item">
+                                <input class="form-check-input me-1" type="checkbox" name="selection" value="{{ set.id }}">
+                                <b>{{ set.name }}</b>
+                                {{ set.description }}
+                            </li>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                <input type="submit" value="Remove">
+                <a href="/{{ session.user_id }}">Cancel</a>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
