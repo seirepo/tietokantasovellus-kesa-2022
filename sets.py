@@ -148,3 +148,10 @@ def get_set_creator_id(set_id):
     creator_id = db.session.execute(sql, {"set_id":set_id}).fetchone()
     if creator_id:
         return creator_id[0]
+
+def get_all_public_sets():
+    sql = """SELECT id, name, description, term, definition, private
+             FROM sets
+             WHERE private=0"""
+    sets = db.session.execute(sql).fetchall()
+    return sets

@@ -10,7 +10,8 @@ import plays
 @app.route("/")
 def index():
     users_info = users.get_all_users()
-    return render_template("index.html", count=len(users_info), users=users_info)
+    public_sets = sets.get_all_public_sets()
+    return render_template("index.html", user_count=len(users_info), set_count=len(public_sets), users=users_info, sets=public_sets)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
