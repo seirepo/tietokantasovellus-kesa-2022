@@ -22,7 +22,6 @@ def login():
         password = request.form["password"]
 
         if users.login(username, password):
-            flash("Welcome " + username)
             return redirect("/")
         else:
             flash("Invalid username or password")
@@ -60,7 +59,6 @@ def register():
                 return redirect("/register")
 
         if users.register(username, password1, role):
-            flash("Welcome " + username)
             return redirect("/")
         else:
             return render_template("error.html")

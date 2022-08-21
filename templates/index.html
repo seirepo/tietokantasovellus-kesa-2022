@@ -3,7 +3,13 @@
 {% block content %}
 
 <div class="container">
-    {% if not session.username %}
+    {% if session.username %}
+        <div class="row">
+            <div class="col align-self-center">
+                Welcome {{ session.username }}!
+            </div>
+        </div>
+    {% else %}
         <div class="row">
             <div class="col align-self-center">
                 Welcome to Wordslet! Log in to create a set of cards, to play and more.
