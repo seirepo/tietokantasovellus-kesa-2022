@@ -9,8 +9,6 @@
 
             <form action="/add-new-set" method="post">
                 <div class="form-group col-6">
-
-
                     <label for="inputName">Name</label>
                     <input type="text" class="form-control" id="inputName" name="name" minlength="1" maxlength="100">
 
@@ -37,11 +35,12 @@
                             <input type="radio" name="private" value=1> Private
                         </label>
                     </div>
-                    <br>
+                </div>
+
+                <div class="form-group col-6">
                     <input type="submit" class="btn btn-primary" value="Create set">
                     <a class="btn btn-secondary" href="/{{ session.user_id }}">Cancel</a>
                     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-
                 </div>
             </form>
         </div>
