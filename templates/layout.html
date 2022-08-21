@@ -1,34 +1,51 @@
 <!doctype html>
-<link rel="stylesheet" href="/static/main.css">
+<!-- <link rel="stylesheet" href="/static/main.css"> -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wordslet - {% block title %}{% endblock %}</title>
 
-<div id="pagetop">
-    <div class="header">
-        <a href="/">Wordslet</a>
-    </div>
-    <div id="userinfo">
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <a href="/">Wordslet</a>
+        </div>
         {% if session.username %}
-        <!-- You are signed in as <a href="/{{ session.user_id }}">{{ session.username }}</a> -->
-        You are signed in as {{ session.username }}
-        <br>
-        <a href="/{{ session.user_id }}">Own sets</a>
-        <br>
-        <a href="/logout">Logout</a>
+            <div class="col-md-auto">
+                <!-- You are signed in as <a href="/{{ session.user_id }}">{{ session.username }}</a> -->
+                <a href="/{{ session.user_id }}">{{ session.username }}'s sets</a>
+            </div>
+            <div class="col-1">
+                <a href="/logout">Logout</a>
+            </div>
         {% else %}
-        <a href="/login">Login</a>
-        <a href="/register">Sign up</a>
+        <div class="col-1">
+            <a href="/login">Login</a>
+        </div>
+        <div class="col-2">
+            <a href="/register">Sign up</a>
+        </div>
         {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-8 offset-md-3">
+            <form action="/result" method="GET">
+                <input type="text" name="query">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        {{ message }} <br>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </div>
 </div>
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-{{ message }} <br>
-{% endfor %}
-{% endif %}
-{% endwith %}
+
 
 {% block content %}{% endblock %}
 <hr>
