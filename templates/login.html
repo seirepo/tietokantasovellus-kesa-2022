@@ -3,23 +3,24 @@
 {% block header %}Login{% endblock %}
 {% block content %}
 
-<div class="row">
-    <div class="col-8">
-        <form action="/login" method="POST">
-            <div class="form-group col-6">
-                <label for="inputUsername">Username</label>
-                <input type="text" class="form-control" id="inputUsername" name="username">
-            </div>
-            <div class="form-group col-6">
-                <label for="inputPassword">Password</label>
-                <input type="password" class="form-control" id="inputPassword" name="password">
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h1>Log in</h1>
+            <form action="/login" method="POST">
                 <div class="form-group col-6">
-                <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-        </form>
-        <div class="col-6">
-            <a class="btn btn-secondary" href="/" role="button">Cancel</a>
+                    <label for="inputUsername">Username</label>
+                    <input type="text" class="form-control" id="inputUsername" name="username">
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" name="password">
+                </div>
+                <div class="form-group col-6">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a class="btn btn-secondary" href="/" role="button">Cancel</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
