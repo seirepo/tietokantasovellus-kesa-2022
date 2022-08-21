@@ -23,8 +23,8 @@
 
                 {% endfor %}
 
-                <input type="submit" value="Remove">
-                <a href="/{{ session.user_id }}">Cancel</a>
+                <input type="submit" class="btn btn-primary" value="Remove">
+                <a class="btn btn-secondary" href="/{{ session.user_id }}">Cancel</a>
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form>
         </div>
