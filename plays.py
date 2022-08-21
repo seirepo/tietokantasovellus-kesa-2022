@@ -11,9 +11,7 @@ def get_latest_game_id(user_id, set_id):
         return id
 
 def setup_new_game(user_id, set_id, answer_with):
-    print("####set up new game", set_id, "for", user_id)
     clear_latest(user_id, set_id)
-    print("####previous game cleared")
     sql = """INSERT INTO latest_games (user_id, set_id, answer_with)
     VALUES (:user_id, :set_id, :answer_with) RETURNING id"""
     game_id = db.session.execute(sql, {"user_id":user_id, "set_id":set_id, "answer_with":answer_with}).fetchone()[0]
@@ -27,11 +25,9 @@ def setup_new_game(user_id, set_id, answer_with):
         db.session.commit()
         if not result:
             return False
-    print("####new game setup done")
     return game_id
 
 def get_random_card(latest_game_id):
-    #print("####got game id", game_id, "(", type(game_id), ")")
     sql = """SELECT cards.id, cards.word1, cards.word2
              FROM cards, card_results AS results
              WHERE  cards.id = results.card_id AND results.latest_game_id=:latest_game_id
@@ -39,7 +35,6 @@ def get_random_card(latest_game_id):
              ORDER BY random()
              LIMIT 1
              """
-    #sql = """SELECT card_id FROM card_results WHERE latest_game_id=:latest_game_id LIMIT 1"""
     result = db.session.execute(sql, {"latest_game_id":latest_game_id})
     card = result.fetchone()
     return card
@@ -69,7 +64,6 @@ def check_result(response, card_id, game_id, answer_with):
         sql = """UPDATE card_results SET times_guessed_wrong=times_guessed_wrong + 1
                  WHERE latest_game_id=:latest_game_id AND card_id=:card_id"""
         result = False
-    print("####executing", sql)
     db.session.execute(sql, {"latest_game_id":game_id, "card_id":card_id})
     db.session.commit()
     return result
@@ -80,7 +74,6 @@ def get_answer_with(game_id):
     return result
 
 def get_card_results_ordered(game_id):
-    #sql = """SELECT card_id, times_guessed_wrong FROM card_results WHERE latest_game_id=:game_id"""
     sql = """SELECT cards.word1, cards.word2, results.times_guessed_wrong,
              results.time_guessed
              FROM cards, card_results AS results
