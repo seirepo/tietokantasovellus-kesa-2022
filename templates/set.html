@@ -1,6 +1,84 @@
 {% extends "layout.html" %}
 {% block title %}Play{% endblock %}
 {% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <p class="h2">{{ set.name }}</p>
+            <p class="lead">{{ set.description }}</p>
+        </div>
+
+        {% if creator == session.user_id %}
+        <div class="col-4">
+            <a class="btn btn-primary" href="/edit-set/{{ set.id }}">Edit set</a>
+            <a class="btn btn-secondary" href="">Remove set</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+
+            <p class="h3">Play set</p>
+            <form action="/set/{{ set.id }}" method="post">
+
+                <div class="form-group col-6">
+                    Answer with
+                </div>
+                <div class="form-group col-6">
+                    <label class="btn btn-light">
+                        <input type="radio" name="answer_with" value="word1"> {{ set.term }}
+                    </label>
+                </div>
+                <div class="form-group col-6">
+                    <label class="btn btn-light">
+                        <input type="radio" name="answer_with" value="word2" checked> {{ set.definition }}
+                    </label>
+                </div>
+
+                <div class="form-group col-6">
+                    {% if game_id %}
+                    <input type="submit" class="btn btn-primary" name="submit_button" value="Continue">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    {% endif %}
+                    <input type="submit" class="btn btn-primary" name="submit_button" value="Start a new game">
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                </div>
+            </form>
+        </div>
+
+        <div class="col-4">
+            <p class="h3">Stats</p>
+            TODO
+        </div>
+
+    </div>
+    <div class="row">
+        <p class="h3">Cards ({{ card_count }})</p>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ set.term }}</th>
+                    <th>{{ set.definition }}</th>
+                </tr>
+            </thead>
+            {% for card in cards %}
+            <tbody>
+                <tr>
+                    <td>{{ card.word1 }}</td>
+                    <td>{{ card.word2 }}</td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+</div>
+
+<!--
 <h1>{{ set.name }}, {{ set.id }}</h1>
 <p>{{ set.description }}</p>
 
@@ -34,8 +112,8 @@ TODO
         <td>{{ card.word1 }}</td>
         <td>{{ card.word2 }}</td>
     </tr>
-    <!-- <p>{{ card.word1 }} - {{ card.word2 }}</p> -->
 {% endfor %}
 </table>
+-->
 
 {% endblock %}

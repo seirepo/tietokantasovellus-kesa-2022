@@ -149,7 +149,8 @@ def set(set_id):
             return render_template("set.html", set=set, card_count=len(cards), cards=cards)
 
         game_id = plays.get_latest_game_id(current_user_id, set_id)
-        return render_template("set.html", set=set, card_count=len(cards), cards=cards, game_id=game_id)
+        creator = sets.get_set_creator_id(set_id)
+        return render_template("set.html", set=set, card_count=len(cards), cards=cards, game_id=game_id, creator=creator)
 
     if request.method == "POST":
         if not current_user_id:
