@@ -2,13 +2,25 @@
 {% block title %}Login{% endblock %}
 {% block header %}Login{% endblock %}
 {% block content %}
-<form action="/login" method="POST">
-    <p>Username:
-    <input type="text" name="username"></p>
-    <p>Password:
-    <input type="password" name="password"></p>
-    <input type="submit" value="Log in">
-    <br>
-    <a href="/">Cancel</a>
-</form>
+
+<div class="row">
+    <div class="col-8">
+        <form action="/login" method="POST">
+            <div class="form-group col-6">
+                <label for="inputUsername">Username</label>
+                <input type="text" class="form-control" id="inputUsername" name="username">
+            </div>
+            <div class="form-group col-6">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" id="inputPassword" name="password">
+            </div>
+                <div class="form-group col-6">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+      </form>
+    <div class="col-6">
+        <a class="btn btn-secondary" href="/" role="button">Cancel</a>
+    </div>
+    </div>
+  </div>
 {% endblock %}
