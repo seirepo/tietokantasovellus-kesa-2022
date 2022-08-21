@@ -2,17 +2,35 @@
 {% block title %}Register{% endblock %}
 {% block header %}Register{% endblock %}
 {% block content %}
-<form action="/register" method="POST">
-    <p>Username:
-    <input type="text" name="username"></p>
-    <p>Password:
-    <input type="password" name="password1"></p>
-    <p>Repeat password
-    <input type="password" name="password2"></p>
-    <input type="radio" name="role" value=0 checked> Normal user
-    <input type="radio" name="role" value=1> Star user
-    <p>
-    <input type="submit" value="Sign up">
-    <a href="/">Cancel</a>
-</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h1>Sign up</h1>
+            <form action="/register" method="POST">
+                <div class="form-group col-6">
+                    <label for="inputUsername">Username</label>
+                    <input type="text" class="form-control" id="inputUsername" name="username">
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword1" name="password1">
+                </div>
+                <div class="form-group col-6">
+                    <label for="inputPassword">Repeat password</label>
+                    <input type="password" class="form-control" id="inputPassword2" name="password2">
+                </div>
+                <div class="form-group col-6">
+                    <input type="radio" name="role" value=0 checked> Normal user
+                    <input type="radio" name="role" value=1> Star user
+                </div>
+                <div class="form-group col-6">
+                    <button type="submit" class="btn btn-primary">Sign up</button>
+                    <a class="btn btn-secondary" href="/" role="button">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
