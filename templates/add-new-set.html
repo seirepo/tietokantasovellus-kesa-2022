@@ -29,16 +29,21 @@
                     <input type="text" class="form-control" id="inputDefinition" name="definition"
                         placeholder="definition" maxlength="100">
 
-                    <input type="radio" name="private" value=0 checked> Public
-                    <input type="radio" name="private" value=1> Private
-                    <p>
-
-                        <input type="submit" class="btn btn-primary" value="Create set">
-                        <a class="btn btn-secondary" href="/{{ session.user_id }}">Cancel</a>
-
-                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-light active">
+                            <input type="radio" name="private" value=0 checked> Public
+                        </label>
+                        <label class="btn btn-light active">
+                            <input type="radio" name="private" value=1> Private
+                        </label>
+                    </div>
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Create set">
+                    <a class="btn btn-secondary" href="/{{ session.user_id }}">Cancel</a>
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
                 </div>
+            </form>
         </div>
     </div>
 </div>
