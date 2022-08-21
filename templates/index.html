@@ -3,37 +3,55 @@
 {% block content %}
 
 <div class="container">
+
     {% if session.username %}
+
         <div class="row">
             <p class="h1">Welcome {{ session.username }}!</p>
         </div>
+
     {% else %}
+
         <div class="row">
             <div class="col align-self-center">
                 Welcome to Wordslet! Log in to create a set of cards, to play and more.
             </div>
         </div>
+
     {% endif %}
+
     <div class="row">
         <div class="col-6">
             <p class="lead">Users: {{ user_count }}</p>
             <ul class="list-group">
+
             {% for user in users %}
+
                 {% if user.role %}
+
                     <li class="list-group-item"><a href="/{{ user.id }}"> {{ user.username }} &#9733;</a></li>
+
                 {% else %}
+
                     <li class="list-group-item"><a href="/{{ user.id }}">{{ user.username }}</a></li>
+
                 {% endif %}
+
             {% endfor %}
+
             </ul>
         </div>
         <div class="col-6">
             <p class="lead">Sets: {{ set_count }}</p>
             <ul class="list-group">
+
                 {% for set in sets %}
+
                     <li class="list-group-item"><a href="/set/{{ set.id }}">{{ set.name }}</a>
                         <br> {{ set.description }}</li>
+
                 {% endfor %}
+
             </ul>
         </div>
     </div>
