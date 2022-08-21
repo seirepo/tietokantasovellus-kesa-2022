@@ -1,8 +1,49 @@
 {% extends "layout.html" %}
 {% block title %}New set{% endblock %}
 {% block content %}
-<h2>Create new set</h2>
 
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h2>Create new set</h2>
+
+            <form action="/add-new-set" method="post">
+                <div class="form-group col-6">
+
+
+                    <label for="inputName">Name</label>
+                    <input type="text" class="form-control" id="inputName" name="name" minlength="1" maxlength="100">
+
+                    <label for="inputDescription">Description</label>
+                    <input type="text" class="form-control" id="inputDescription" name="description" maxlength="100">
+
+                    <label for="inputWords">Words</label>
+                    <textarea class="form-control" id="inputWords" name="words" placeholder="Ex. cat;kissa" rows="8"
+                        cols="40" maxlength="10000"></textarea>
+
+                    <label for="inputTerm">Term</label>
+                    <input type="text" class="form-control" id="inputTerm" name="term" placeholder="term"
+                        maxlength="100">
+
+                    <label for="inputDefinition">Definition</label>
+                    <input type="text" class="form-control" id="inputDefinition" name="definition"
+                        placeholder="definition" maxlength="100">
+
+                    <input type="radio" name="private" value=0 checked> Public
+                    <input type="radio" name="private" value=1> Private
+                    <p>
+
+                        <input type="submit" class="btn btn-primary" value="Create set">
+                        <a class="btn btn-secondary" href="/{{ session.user_id }}">Cancel</a>
+
+                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+                </div>
+        </div>
+    </div>
+</div>
+
+<!--
 <form action="/add-new-set" method="post">
 
     <p>Name:
@@ -28,5 +69,6 @@
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
 </form>
+-->
 
 {% endblock %}
