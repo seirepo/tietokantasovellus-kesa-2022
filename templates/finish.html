@@ -2,6 +2,39 @@
 {% block title %}Play{% endblock %}
 {% block content %}
 
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <p class="h2">Finished set {{ set.name }}</p>
+            <p class="lead">{{ set.description }}</p>
+        </div>
+
+    </div>
+    <div class="row">
+        <p class="h2">Cards ({{ card_count }})</p>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ set.term }}</th>
+                    <th>{{ set.definition }}</th>
+                    <th>times guessed wrong</th>
+                </tr>
+            </thead>
+            {% for card in results %}
+            <tbody>
+                <tr>
+                    <td>{{ card.word1 }}</td>
+                    <td>{{ card.word2 }}</td>
+                    <td>{{ card.times_guessed_wrong }}</td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<!--
 <h1>Finished set {{ set.name }}</h1>
 <p>{{ set.description }}</p>
 
@@ -23,4 +56,6 @@
 </table>
 
 <a href="/set/{{ set.id }}">Back to set</a>
+-->
+
 {% endblock %}
