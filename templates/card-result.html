@@ -2,10 +2,47 @@
 {% block title %}Play{% endblock %}
 {% block content %}
 
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <form action="/play/{{ set_id }}" method="get">
+
+                <div class="form-group col-10">
+                    {% if correct %}
+                    <div class="form-group" id="feedback">
+                        Correct!
+                    </div>
+                    <div class="form-group col-6">
+                        {{ word }}
+                    </div>
+                    <div class="form-group col-6">
+                        <input readonly value="{{ response }}" autofocus>
+                    </div>
+                    {% else %}
+                    <div class="form-group" id="feedback">
+                        {{ response }} was not correct, correct answer was {{ correct_answer }}
+                    </div>
+                    <div class="form-group col-6">
+                        {{ word }}
+                    </div>
+                    <div class="form-group col-6">
+                        <input readonly value="{{ response }}" autofocus>
+                    </div>
+                    {% endif %}
+                </div>
+                <input type="submit" class="btn btn-primary" value="Next">
+                <a class="btn btn-secondary" href="/set/{{ set_id }}">Stop</a>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--
 <form action="/play/{{ set_id }}" method="get">
     {{ word }} <br>
     {% if correct %}
-        <!-- <input type="text" value="{{ response }}"> was correct! -->
         <input readonly value="{{ response }}" autofocus>
         <input type="submit" value="Next">
         <br>
@@ -19,5 +56,6 @@
     <br>
     <a href="/set/{{ set_id }}">Stop</a>
 </form>
+-->
 
 {% endblock %}
