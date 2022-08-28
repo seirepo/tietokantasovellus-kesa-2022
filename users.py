@@ -59,3 +59,8 @@ def get_all_users():
     result = db.session.execute("SELECT id, username, role FROM users")
     users = result.fetchall()
     return users
+
+def search_from_users(query):
+    sql = """SELECT id, username FROM users WHERE username LIKE :query"""
+    result = db.session.execute(sql, {"query":"%"+query+"%"}).fetchall()
+    return result

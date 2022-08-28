@@ -1,5 +1,44 @@
-<h1>WORDSLET</h1>
-{% if count == 0 %}
+{% extends "layout.html" %}
+{% block title %}Search result{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <p class="h2">Search results</p>
+        <div class="col-6">
+            <p class="lead">User</p>
+            <div class="col-12">
+                {% if count_users == 0 %}
+                <p>No users found :-(</p>
+                {% else %}
+                <ul class="list-group">
+                    {% for user in users %}
+                    <li class="list-group-item"><a href="/{{ user.id }}">{{ user.username }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-6">
+            <p class="lead">Sets</p>
+            {% if count_sets == 0 %}
+            <p>No sets found :-(</p>
+            {% else %}
+            <ul class="list-group">
+                {% for set in sets %}
+                <li class="list-group-item"><a href="/set/{{ set.id }}">{{ set.name }}</a>
+                    <br> {{ set.description }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!---
+{% if count_users == 0 %}
 <p>No users found :-(</p>
 {% else %}
 Users found:
@@ -9,3 +48,17 @@ Users found:
 {% endfor %}
 </ul>
 {% endif %}
+
+{% if count_sets == 0 %}
+<p>No sets found :-(</p>
+{% else %}
+Sets found:
+<ul>
+{% for set in sets %}
+<li>{{ set.name }}, {{ set.description }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+-->
+
+{% endblock %}

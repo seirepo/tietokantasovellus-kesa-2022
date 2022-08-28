@@ -71,10 +71,14 @@ def logout():
 @app.route("/result")
 def result():
     query = request.args["query"]
-    sql = "SELECT id, username FROM users WHERE username LIKE :query"
-    result = db.session.execute(sql, {"query":"%"+query+"%"})
-    users = result.fetchall()
-    return render_template("result.html", users=users, count=len(users))
+    if len(query) == 0:
+        users_results = users.get_all_users()
+        sets_results = sets.get_all_public_sets()
+    users_results = users.search_from_users(query)
+    sets_results = sets.search_from_sets(query)
+    return render_template("result.html",
+        users=users_results, count_users=len(users_results),
+        sets=sets_results, count_sets=len(sets_results))
 
 @app.route("/<int:id>")
 def show_user(id):

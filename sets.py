@@ -155,3 +155,9 @@ def get_all_public_sets():
              WHERE private=0"""
     sets = db.session.execute(sql).fetchall()
     return sets
+
+def search_from_sets(query):
+    sql = """SELECT id, name, description FROM sets
+             WHERE name LIKE :query AND private=0 OR description LIKE :query AND private=0"""
+    result = db.session.execute(sql, {"query":"%"+query+"%"}).fetchall()
+    return result
