@@ -12,8 +12,8 @@ def get_latest_game_id(user_id, set_id):
 
 def setup_new_game(user_id, set_id, answer_with):
     clear_latest(user_id, set_id)
-    sql = """INSERT INTO latest_games (user_id, set_id, answer_with)
-    VALUES (:user_id, :set_id, :answer_with) RETURNING id"""
+    sql = """INSERT INTO latest_games (user_id, set_id, answer_with, start_time)
+    VALUES (:user_id, :set_id, :answer_with, NOW()) RETURNING id"""
     game_id = db.session.execute(sql, {"user_id":user_id, "set_id":set_id, "answer_with":answer_with}).fetchone()[0]
     db.session.commit()
     

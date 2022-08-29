@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS latest_games (
     set_id INTEGER REFERENCES sets ON DELETE CASCADE,
     answer_with TEXT NOT NULL,
     start_time TIMESTAMP,
-    finish_time TIMESTAMP,
     UNIQUE (user_id, set_id)
 );
 
@@ -39,4 +38,11 @@ CREATE TABLE IF NOT EXISTS card_results (
     result INT DEFAULT 0,
     times_guessed_wrong INT DEFAULT 0,
     time_guessed TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS stats (
+    user_id INTEGER REFERENCES users ON DELETE CASCADE,
+    set_id INTEGER REFERENCES sets ON DELETE CASCADE,
+    play_time TIMESTAMP,
+    number_guessed_on_first INTEGER
 );

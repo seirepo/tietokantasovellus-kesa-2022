@@ -287,6 +287,7 @@ def edit_set(set_id):
         sets.add_cards_to_set(set_id, word_pairs)
         sets.remove_cards(remove_ids)
         plays.clear_games_by_set(set_id)
+        #TODO: reset stats for the set
 
     return redirect("/" + str(users.current_user_id()))
 
