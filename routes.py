@@ -5,7 +5,7 @@ from app import app
 from db import db
 import users
 import sets
-import plays
+import plays, stats
 
 @app.route("/")
 def index():
@@ -207,8 +207,9 @@ def play(set_id):
         if not next_card:
             results = plays.get_card_results_ordered(game_id)
             set_info = sets.get_set_info(set_id)
-            plays.delete_game(game_id)
             #TODO: update stats
+            stats.add_stats(game_id)
+            plays.delete_game(game_id)
             return render_template("finish.html", results=results, card_count=len(results), set=set_info, game_id=game_id)
 
         answer_with = plays.get_answer_with(game_id)[0]
