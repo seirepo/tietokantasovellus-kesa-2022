@@ -22,7 +22,7 @@
     </div>
 
     <div class="row">
-        <div class="col-8">
+        <div class="col-6">
 
             <p class="h3">Play set</p>
             <form action="/set/{{ set.id }}" method="post">
@@ -52,26 +52,46 @@
             </form>
         </div>
 
-        <div class="col-4">
+        <div class="col-6">
             <p class="h3">Stats</p>
             <p class="h4">General</p>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>1</th>
+                        <th>Times played</th>
+                        <th>Fastest finish time</th>
+                        <th>Avg #words guessed on first</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td>{{ general_stats[0] }}</td>
+                        <td>{{ general_stats[1] }}</td>
+                        <td>{{ general_stats[2] }}/{{ card_count }}</td>
                     </tr>
                 </tbody>
             </table>
 
+            {% if user_stats %}
             {% if creator.id == session.user_id %}
             <p class="h4">{{ session.username }}'s stats</p>
             <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Times played</th>
+                        <th>Fastest finish time</th>
+                        <th>Avg #words guessed on first</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ user_stats[0] }}</td>
+                        <td>{{ user_stats[1] }}</td>
+                        <td>{{ user_stats[2] }}/{{ card_count }}</td>
+                    </tr>
+                </tbody>
             </table>
+            {% endif %}
             {% endif %}
         </div>
 

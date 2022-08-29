@@ -45,7 +45,14 @@ def get_recently_finished(user_id):
     return finished
 
 def get_general_stats(set_id):
-    pass
+    sql = """SELECT COUNT(set_id), MIN(play_time), round(AVG(guessed_on_first),2)
+             FROM stats WHERE set_id=:set_id"""
+    stats = db.session.execute(sql, {"set_id":set_id}).fetchone()
+    return stats
 
 def get_user_stats(user_id, set_id):
-    pass
+    sql = """SELECT COUNT(S.set_id), MIN(S.play_time), round(AVG(S.guessed_on_first),2)
+             FROM stats S LEFT JOIN users U ON S.user_id=U.id
+             WHERE S.set_id=:set_id AND S.user_id=:user_id"""
+    stats = db.session.execute(sql, {"set_id":set_id, "user_id":user_id}).fetchone()
+    return stats
