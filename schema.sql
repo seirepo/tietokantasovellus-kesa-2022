@@ -44,5 +44,6 @@ CREATE TABLE IF NOT EXISTS stats (
     user_id INTEGER REFERENCES users ON DELETE CASCADE,
     set_id INTEGER REFERENCES sets ON DELETE CASCADE,
     play_time INTERVAL,
+    finish_time TIMESTAMP,
     guessed_on_first INTEGER
 );
