@@ -174,6 +174,14 @@ def set(set_id):
             plays.update_answer_with(game_id, answer_with)
             card = plays.get_random_card(game_id)
 
+            if not card:
+                results = plays.get_card_results_ordered(game_id)
+                set_info = sets.get_set_info(set_id)
+                stats.add_stats(game_id)
+                plays.delete_game(game_id)
+
+                return render_template("finish.html", results=results, card_count=len(results), set=set_info, game_id=game_id)
+
             return render_template("play.html", set_id=set_id, game_id=game_id, card=card, answer_with=answer_with)
 
         elif request.form["submit_button"] == "Start a new game":
