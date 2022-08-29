@@ -96,5 +96,5 @@ def get_game_info(game_id):
     sql = """SELECT user_id, set_id, start_time
              FROM latest_games
              WHERE id=:game_id"""
-    info = db.session.execute(sql, {"id":game_id}).fetchall()
+    info = db.session.execute(sql, {"game_id":game_id}).fetchall()
     return info
