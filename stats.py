@@ -43,3 +43,9 @@ def get_recently_finished(user_id):
              LIMIT 5"""
     finished = db.session.execute(sql, {"user_id":user_id}).fetchall()
     return finished
+
+def get_general_stats(set_id):
+    pass
+
+def get_user_stats(user_id, set_id):
+    pass

@@ -2,15 +2,18 @@
 {% block title %}Play{% endblock %}
 {% block content %}
 
-
 <div class="container">
     <div class="row">
         <div class="col-8">
             <p class="h2">{{ set.name }}</p>
-            <p class="lead">{{ set.description }}</p>
+            <p class="lead">{{ set.description }}
+                <small>
+                    by <a href="/{{ creator.id }}">{{ creator.username }}</a>
+                </small>
+            </p>
         </div>
 
-        {% if creator == session.user_id %}
+        {% if creator.id == session.user_id %}
         <div class="col-4">
             <a class="btn btn-primary" href="/edit-set/{{ set.id }}">Edit set</a>
             <a class="btn btn-secondary" href="/confirm?action=remove&target=set&id={{ set.id }}">Remove set</a>
@@ -65,7 +68,7 @@
                 </tbody>
             </table>
 
-            {% if creator == session.user_id %}
+            {% if creator.id == session.user_id %}
             <p class="h4">{{ session.username }}'s stats</p>
             <table class="table table-striped">
             </table>

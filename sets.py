@@ -149,6 +149,14 @@ def get_set_creator_id(set_id):
     if creator_id:
         return creator_id[0]
 
+def get_set_creator_info(set_id):
+    sql = """SELECT U.id, U.username
+             FROM users U LEFT JOIN sets S
+             ON S.creator_id=U.id
+             WHERE S.id=:id"""
+    creator_info = db.session.execute(sql, {"id":set_id}).fetchone()
+    return creator_info
+
 def get_all_public_sets():
     sql = """SELECT id, name, description, term, definition, private
              FROM sets
