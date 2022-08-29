@@ -54,10 +54,22 @@
 
             </div>
         </div>
+        {% endif %}
 
+        {% if creator == session.user_id %}
         <div class="col-6">
             <div class="col">
                 <p class="h4">Recently played</p>
+
+                {% if count_recent == 0 %}
+
+                <div class="row">
+                    <p>No recently played sets</p>
+                </div>
+
+                {% else %}
+
+
                 <div class="list-group">
 
                     {% for set in recently_played %}
@@ -71,28 +83,35 @@
                     {% endfor %}
 
                 </div>
+                {% endif %}
+
             </div>
             <div class="col">
                 <p class="h4">Recently finished</p>
+
+                {% if count_finished == 0 %}
+                <div class="row">
+                    <p>No recently finished sets</p>
+                </div>
+
+                {% else %}
                 <div class="list-group">
 
                     {% for set in recently_finished %}
-
                     <a href="/set/{{ set.id }}" class="list-group-item list-group-item-action">
                         <b>{{ set.name }}</b>
                         <br>
                         {{set.description }}
                     </a>
-
                     {% endfor %}
 
                 </div>
+                {% endif %}
             </div>
         </div>
+        {% endif %}
 
     </div>
-
-    {% endif %}
 
 </div>
 
