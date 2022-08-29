@@ -43,6 +43,6 @@ CREATE TABLE IF NOT EXISTS card_results (
 CREATE TABLE IF NOT EXISTS stats (
     user_id INTEGER REFERENCES users ON DELETE CASCADE,
     set_id INTEGER REFERENCES sets ON DELETE CASCADE,
-    play_time TIMESTAMP,
-    number_guessed_on_first INTEGER
+    play_time INTERVAL,
+    guessed_on_first INTEGER
 );
