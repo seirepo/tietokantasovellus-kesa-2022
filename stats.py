@@ -36,7 +36,7 @@ def get_recently_played(user_id):
     return latest
 
 def get_recently_finished(user_id):
-    sql = """SELECT DISTINCT S.id, S.name, S.description A.finish_time,
+    sql = """SELECT DISTINCT S.id, S.name, S.description, A.finish_time
              FROM sets S LEFT JOIN stats A ON s.id=A.set_id
              WHERE A.user_id=:user_id
              ORDER BY finish_time DESC
