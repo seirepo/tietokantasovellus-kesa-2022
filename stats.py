@@ -25,3 +25,19 @@ def reset_stats(set_id):
     sql = """DELETE FROM stats WHERE set_id=:set_id"""
     db.session.execute(sql, {"set_id":set_id})
     db.session.commit()
+
+def get_recently_played(user_id):
+    sql = """SELECT DISTINCT S.id, S.name, S.description FROM sets S
+             LEFT JOIN latest_games A ON s.id=A.set_id
+             WHERE A.user_id=:user_id;"""
+
+    latest = db.session.execute(sql, {"user_id":user_id}).fetchall()
+    return latest
+
+def get_recently_finished(user_id):
+    sql = """SELECT DISTINCT S.id, S.name, S.description FROM sets S
+             LEFT JOIN stats A ON s.id=A.set_id
+             WHERE A.user_id=:user_id
+             LIMIT 5;"""
+    finished = db.session.execute(sql, {"user_id":user_id}).fetchall()
+    return finished

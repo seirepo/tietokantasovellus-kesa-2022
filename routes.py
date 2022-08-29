@@ -87,7 +87,11 @@ def show_user(id):
     show_all = int(id == users.current_user_id())
     sort_by = request.args.get("sort_by")
     user_sets = sets.get_sets(id, show_all, sort_by)
-    return render_template("user.html", count=len(user_sets), username=username, sets=user_sets, creator=id)
+    recently_played = stats.get_recently_played(id)
+    recently_finished = stats.get_recently_finished(id)
+    return render_template("user.html", count=len(user_sets),
+                username=username, sets=user_sets, creator=id,
+                recently_played=recently_played, recently_finished=recently_finished)
 
 @app.route("/add-new-set", methods=["GET", "POST"])
 def add_new_set():

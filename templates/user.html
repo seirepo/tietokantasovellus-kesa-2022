@@ -60,7 +60,7 @@
                 <p class="h4">Recently played</p>
                 <div class="list-group">
 
-                    {% for set in sets %}
+                    {% for set in recently_played %}
 
                     <a href="/set/{{ set.id }}" class="list-group-item list-group-item-action">
                         <b>{{ set.name }}</b>
@@ -73,10 +73,10 @@
                 </div>
             </div>
             <div class="col">
-                <p class="h4">Recently played</p>
+                <p class="h4">Recently finished</p>
                 <div class="list-group">
 
-                    {% for set in sets %}
+                    {% for set in recently_finished %}
 
                     <a href="/set/{{ set.id }}" class="list-group-item list-group-item-action">
                         <b>{{ set.name }}</b>
