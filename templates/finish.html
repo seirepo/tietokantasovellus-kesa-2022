@@ -8,7 +8,9 @@
             <p class="h2">Finished set {{ set.name }}</p>
             <p class="lead">{{ set.description }}</p>
         </div>
-
+        <div class="col-4">
+            <a class="btn btn-primary" href="/set/{{ set.id }}">OK</a>
+        </div>
     </div>
     <div class="row">
         <p class="h2">Cards ({{ card_count }})</p>
