@@ -4,7 +4,16 @@
 
 <div class="container">
     <div class="row">
-        <h1>{{ username }}'s sets</h1>
+        <div class="col-8">
+            <h1>{{ username }}'s sets</h1>
+        </div>
+        <div class="col-4">
+
+            {% if creator == session.user_id %}
+            <a class="btn btn-primary" href="/add-new-set">Add a new set</a>
+            <a class="btn btn-primary" href="/remove-sets">Remove sets</a>
+            {% endif %}
+        </div>
     </div>
 
     {% if count == 0 %}
@@ -15,23 +24,23 @@
 
     {% else %}
 
-    <div class="row" id="sort-selector">
-        <div class="col-3">
-            <form class="input-group">
-                <select class="form-select form-select-sm" name="sort_by">
-                    <option value="" selected disabled hidden>Select</option>
-                    <option value="name">Name</option>
-                    <option value="newest">Newest</option>
-                    <option value="oldest">Oldest</option>
-                </select>
-                <button type="submit" class="btn btn-primary">Sort</button>
-            </form>
-        </div>
-    </div>
-
     <div class="row" id="user-sets">
         <div class="col-6">
             <div class="list-group">
+
+                <div class="row" id="sort-selector">
+                    <div class="col-6">
+                        <form class="input-group">
+                            <select class="form-select form-select-sm" name="sort_by">
+                                <option value="" selected disabled hidden>Select</option>
+                                <option value="name">Name</option>
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Sort</button>
+                        </form>
+                    </div>
+                </div>
 
                 {% for set in sets %}
 
@@ -45,16 +54,46 @@
 
             </div>
         </div>
+
+        <div class="col-6">
+            <div class="col">
+                <p class="h4">Recently played</p>
+                <div class="list-group">
+
+                    {% for set in sets %}
+
+                    <a href="/set/{{ set.id }}" class="list-group-item list-group-item-action">
+                        <b>{{ set.name }}</b>
+                        <br>
+                        {{set.description }}
+                    </a>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="col">
+                <p class="h4">Recently played</p>
+                <div class="list-group">
+
+                    {% for set in sets %}
+
+                    <a href="/set/{{ set.id }}" class="list-group-item list-group-item-action">
+                        <b>{{ set.name }}</b>
+                        <br>
+                        {{set.description }}
+                    </a>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
     {% endif %}
 
-    {% if creator == session.user_id %}
-
-        <a class="btn btn-primary" href="/add-new-set">Add a new set</a>
-        <a class="btn btn-primary" href="/remove-sets">Remove sets</a>
-
-    {% endif %}
 </div>
 
 {% endblock %}
