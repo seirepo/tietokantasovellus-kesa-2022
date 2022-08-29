@@ -1,8 +1,18 @@
 # Wordslet: sovellus vieraan kielen sanojen opiskeluun
 
-#### 07.08.2022
+[sovellus herokussa](https://tikaso-wordslet.herokuapp.com/)
 
-https://tikaso-wordslet.herokuapp.com/
+#### 29.08.2022
+
+Sovelluksen suunniteltujen päätoiminnallisuuksien pitäisi nyt olla kunnossa.
+
+##### Tunnetut viat
+- koodissa on jonkun verran toisteisuutta
+- funktiot on isoja
+- sovelluksen ulkoasu on melko yksinkertainen
+- formien tiedot eivät säily jos jonkin syötteistä on virheellinen
+
+#### 07.08.2022
 
 Herokussa voi luoda uuden käyttäjän, kirjautua sovellukseen ja tehdä oman sanakokoelman, joka näkyy käyttäjän omilla sivuilla. Luotuja kokoelmia voi myös poistaa. Tällä hetkellä muokkauksesta toimii vain yksitäisten sanojen poisto. Käyttäjiä voi myös hakea hakupalkista.
 
@@ -25,8 +35,8 @@ Kirjautumaton käyttäjä voi selata käyttäjiä ja sanakokoelmia, mutta ei har
 ## Sanakokoelmat
 Sanakokoelmista näkyvät tiedot:
 - [x] nimi (pakollinen)
-- [ ] sanojen määrä
-- [ ] kokoelman luonut käyttäjä
+- [x] sanojen määrä
+- [x] kokoelman luonut käyttäjä
 - [x] käyttäjän kirjoittama kuvaus (vapaaehtoinen)
 
 Sanakokoelma voi olla julkinen tai yksityinen.
