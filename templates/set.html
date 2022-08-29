@@ -13,7 +13,7 @@
         {% if creator == session.user_id %}
         <div class="col-4">
             <a class="btn btn-primary" href="/edit-set/{{ set.id }}">Edit set</a>
-            <a class="btn btn-secondary" href="">Remove set</a>
+            <a class="btn btn-secondary" href="\confirm?action=remove&target=set&id={{ set.id }}">Remove set</a>
         </div>
         {% endif %}
     </div>

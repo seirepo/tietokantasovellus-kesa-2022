@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Play{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form action="/remove-sets?{{ target }}={{ target_id }}" method="post">
+                <div class="form-group col-6">
+                    <label for="confirmAction">{{ question }} {{ target_name }}?</label>
+                </div>
+                <div class="form-group col-6">
+                    <input type="submit" class="btn btn-primary" value="Yes" id="confirmAction">
+                    <a class="btn btn-secondary" href="{{ cancel_path }}" id="confirmAction">Cancel</a>
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

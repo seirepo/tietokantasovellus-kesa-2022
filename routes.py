@@ -137,7 +137,10 @@ def remove():
     if request.method == "POST":
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
-        set_ids = request.form.getlist("selection")
+        if request.args:
+            set_ids = [request.args.get("set")]
+        else:
+            set_ids = request.form.getlist("selection")
         sets.remove_sets(set_ids)
 
         return redirect("/" + str(users.current_user_id()))
@@ -286,3 +289,24 @@ def edit_set(set_id):
         plays.clear_games_by_set(set_id)
 
     return redirect("/" + str(users.current_user_id()))
+
+@app.route("/confirm")
+def confirm():
+    action = request.args.get("action")
+    target = request.args.get("target")
+    id = request.args.get("id")
+
+    if target == "set":
+        target_info = sets.get_set_info(id)
+        current_user_id = users.current_user_id()
+        if sets.get_set_creator_id(id) != current_user_id:
+            return render_template("error.html")
+        cancel_path = "/set/" + id
+    if not target_info:
+        return render_template("error.html")
+    if not id:
+        return render_template("error.html")
+
+    question = "Are you sure you want to " + action + " " + target
+    return render_template("confirm.html", question=question, target=target, target_name=target_info.name,
+    target_id=target_info.id, current_user_id=current_user_id, cancel_path=cancel_path)
