@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS latest_games (
     user_id INTEGER REFERENCES users ON DELETE CASCADE,
     set_id INTEGER REFERENCES sets ON DELETE CASCADE,
     answer_with TEXT NOT NULL,
+    start_time TIMESTAMP,
+    finish_time TIMESTAMP,
     UNIQUE (user_id, set_id)
 );
 
