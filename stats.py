@@ -19,3 +19,9 @@ def add_stats(game_id):
 
     db.session.execute(sql, {"user_id":game_info["user_id"], "set_id":game_info["set_id"],
                             "guessed_on_first":guessed_on_first, "play_time":time})
+    db.session.commit()
+
+def reset_stats(set_id):
+    sql = """DELETE FROM stats WHERE set_id=:set_id"""
+    db.session.execute(sql, {"set_id":set_id})
+    db.session.commit()

@@ -207,7 +207,6 @@ def play(set_id):
         if not next_card:
             results = plays.get_card_results_ordered(game_id)
             set_info = sets.get_set_info(set_id)
-            #TODO: update stats
             stats.add_stats(game_id)
             plays.delete_game(game_id)
             return render_template("finish.html", results=results, card_count=len(results), set=set_info, game_id=game_id)
@@ -288,7 +287,7 @@ def edit_set(set_id):
         sets.add_cards_to_set(set_id, word_pairs)
         sets.remove_cards(remove_ids)
         plays.clear_games_by_set(set_id)
-        #TODO: reset stats for the set
+        stats.reset_stats(set_id)
 
     return redirect("/" + str(users.current_user_id()))
 
