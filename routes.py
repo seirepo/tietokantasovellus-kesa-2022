@@ -91,7 +91,8 @@ def show_user(id):
     recently_finished = stats.get_recently_finished(id)
     return render_template("user.html", count=len(user_sets),
                 username=username, sets=user_sets, creator=id,
-                recently_played=recently_played, recently_finished=recently_finished)
+                recently_played=recently_played, count_recent=len(recently_played),
+                recently_finished=recently_finished, count_finished=len(recently_finished))
 
 @app.route("/add-new-set", methods=["GET", "POST"])
 def add_new_set():
