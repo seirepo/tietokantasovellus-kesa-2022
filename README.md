@@ -2,14 +2,14 @@
 
 [sovellus herokussa](https://tikaso-wordslet.herokuapp.com/)
 
-#### 29.08.2022, loppupalautus
+### Loppupalautus
 
-Sovelluksen suunniteltujen päätoiminnallisuuksien pitäisi nyt olla kunnossa.
+Sovelluksen suunniteltujen päätoiminnallisuuksien pitäisi nyt olla kunnossa. Sovellukseen on luotu kaksi testikäyttäjää ja testisanakokoelmia, joita voi käyttää arvioinnissa. Käyttäjät ovat maija salasanalla maija1 ja kaaleppi salasanalla kaaleppi1.
 
 ##### Tunnetut viat
 - formien tiedot eivät säily jos jonkin syötteistä on virheellinen
-- settikohtaisissa tilastoissa on None jos kukaan ei ole vielä pelannut settiä
-- omista seteistä ei käy helposti ilmi onko setti yksityinen vai julkinen
+- kokoelmakohtaisissa tilastoissa voi olla Noneja jos tilastoja ei vielä ole
+- omista kokoelmista ei käy helposti ilmi onko se yksityinen vai julkinen ilman että menee muokkaamaan kokoelmaa
 - koodissa on jonkun verran toisteisuutta
 - funktiot on isoja
 - sovelluksen ulkoasu on melko yksinkertainen
