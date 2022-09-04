@@ -48,7 +48,7 @@ Sanakokoelma voi olla julkinen tai yksityinen.
 - [x] käyttäjä kirjoittaa saamalleen sanalle käännöksen ja saa palautteen, meneekö se oikein
 - [x] harjoittelu päättyy kun kaikki sanat on käyty läpi (tai jos käyttäjä haluaa keskeyttää harjoittelun)
 - [x] harjoittelun jälkeen käyttäjä saa näkyviin sanat ja tiedon siitä kuinka monella arvauksella sanan sai oikein
-- [ ] käyttäjä näkee jokaisen oman kokoelman kohdalla kuinka monta kertaa on harjoitellut sitä
+- [x] käyttäjä näkee jokaisen oman kokoelman kohdalla kuinka monta kertaa on harjoitellut sitä
 
 ## Jos aikaa jää:
 - mahdollisuus tallentaa kokoelmia tai tykätä niistä
