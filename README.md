@@ -2,15 +2,17 @@
 
 [sovellus herokussa](https://tikaso-wordslet.herokuapp.com/)
 
-#### 29.08.2022
+#### 29.08.2022, loppupalautus
 
 Sovelluksen suunniteltujen päätoiminnallisuuksien pitäisi nyt olla kunnossa.
 
 ##### Tunnetut viat
+- formien tiedot eivät säily jos jonkin syötteistä on virheellinen
+- settikohtaisissa tilastoissa on None jos kukaan ei ole vielä pelannut settiä
+- omista seteistä ei käy helposti ilmi onko setti yksityinen vai julkinen
 - koodissa on jonkun verran toisteisuutta
 - funktiot on isoja
 - sovelluksen ulkoasu on melko yksinkertainen
-- formien tiedot eivät säily jos jonkin syötteistä on virheellinen
 
 #### 07.08.2022
 
